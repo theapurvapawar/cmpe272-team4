@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+#temp {
+	width: 100px;
+	height: 100px;
+	border-width: 1px;
+	border-radius: 5px;
+	border-color: #DEDEDE;
+}
