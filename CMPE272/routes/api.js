@@ -23,8 +23,8 @@ var VTAStopsSchema = new mongoose.Schema(
 
 var Stops = db.model('stops', VTAStopsSchema);
 
-router.get('/stop_id/:id', function (req, res){
-	  return Stops.find({'RTI_STOP' : req.params.id}, function (err, singleStop) {
+router.get('/VTAStops/stopId/:id', function (req, res){
+	  return Stops.find({'RTI_STOP':parseInt(req.params.id)}, function (err, singleStop) {
 	    if (!err) {
 	      return res.send(singleStop);
 	    } else {
@@ -33,6 +33,29 @@ router.get('/stop_id/:id', function (req, res){
 	  });
 	});
 
+
+router.get('/VTAStops/geoRange', function (req, res){
+	  return Stops.find(
+			  {
+				  'LONG_':
+				  {
+					  '$gt': parseFloat(req.query.long1),
+					  '$lt': parseFloat(req.query.long2)
+				  },
+			  	  'LAT':
+			  	  {
+					  '$gt': parseFloat(req.query.lat1),
+					  '$lt': parseFloat(req.query.lat2)
+			  	  }
+			  }
+			  , function (err, singleStop) {
+	    if (!err) {
+	      return res.send(singleStop);
+	    } else {
+	      return console.log(err);
+	    }
+	  });
+	});
 
 module.exports = router;
 
