@@ -7,7 +7,7 @@ router.get('/', function (req, res) {
 });
 
 
-mongoose.connect('mongodb://localhost/vta');
+mongoose.connect('mongodb://IbmCloud_tquh43sj_t83fg534_4jq4ihh5:D_ShaT44kapjLq0Urn3czn6yJqAIr6j5@ds055210.mongolab.com:55210/IbmCloud_tquh43sj_t83fg534');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -23,7 +23,7 @@ var VTAStopsSchema = new mongoose.Schema(
 
 var Stops = db.model('stops', VTAStopsSchema);
 
-router.get('/VTAStops/stopId/:id', function (req, res){
+router.get('/stops/stopId/:id', function (req, res){
 	  return Stops.find({'RTI_STOP':parseInt(req.params.id)}, function (err, singleStop) {
 	    if (!err) {
 	      return res.send(singleStop);
@@ -34,7 +34,7 @@ router.get('/VTAStops/stopId/:id', function (req, res){
 	});
 
 
-router.get('/VTAStops/geoRange', function (req, res){
+router.get('/stops/geoRange', function (req, res){
 	  return Stops.find(
 			  {
 				  'LONG_':
