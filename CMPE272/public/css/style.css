@@ -2,3 +2,11 @@
 .angular-google-map-container { 
 	margin-top: 50px; 
 }
+
+.separator{
+	height: 10px;
+}
+
+.pointer{
+	cursor: pointer;
+}

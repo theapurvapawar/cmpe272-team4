@@ -1,4 +1,4 @@
-var cmpe = angular.module('cmpe', ['ui.router', 'uiGmapgoogle-maps']);
+var cmpe = angular.module('cmpe', ['ui.router', 'uiGmapgoogle-maps', 'ui.bootstrap']);
 
 cmpe.config(function($stateProvider, $urlRouterProvider){
 
