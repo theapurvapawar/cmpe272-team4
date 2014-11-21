@@ -23,7 +23,7 @@
 
       var WS_TILE_FOOTER_HIDDEN = 100;
       var WS_TILE_FOOTER_ADDRESS = 101;
-      
+       
     function ws_tileOptions(defaultHeight, minHeight, maxHeight, numFooterLines) {
       this.defaultHeight = defaultHeight;
       this.minHeight = minHeight;
