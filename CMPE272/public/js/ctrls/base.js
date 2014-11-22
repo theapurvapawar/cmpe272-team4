@@ -1,5 +1,15 @@
-cmpe.controller('baseCtrl', function($scope){
-	$scope.map = { center: { latitude: 37.6, longitude: -122.2 }, zoom: 10 };
+cmpe.controller('baseCtrl', function($scope, $rootScope){
+	$rootScope.map = { center: { latitude: 37.6, longitude: -122.2 }, zoom: 10 };
+	$scope.apartments = [
+	                     {
+	                    	 name: "101 San Fernando",
+	                    	 address: "101 E San Fernando St, San Jose, CA"
+	                     },
+	                     {
+	                    	 name: "33rd South Third",
+	                    	 address: "33 South 3rd Street, San Jose, CA"
+	                     }
+	                     ];
 });
 
 cmpe.directive('scaleHeight', function ($window) {

@@ -3,3 +3,19 @@
 	zoom='map.zoom'
 	options="{disableDefaultUI: true}"
 	data-scale-height></ui-gmap-google-map>
+	
+<div class="left-content">
+	<input type="text" class="form-control" data-ng-model="map.center.latitude" />
+	<input type="text" class="form-control" data-ng-model="map.center.longitude" />
+	<input type="text" class="form-control" data-ng-model="map.zoom" />
+	<h3>List of apartments:</h3>
+	<hr style="margin: 0;">
+	<div class="separator"></div>
+	<div data-ng-repeat="apartment in apartments" class="col-xs-12">
+		<h5>{{apartment.name}}</h5>
+		<div>
+			{{apartment.address}}
+		</div>
+		<hr style="margin: 0;">
+	</div>
+</div>
