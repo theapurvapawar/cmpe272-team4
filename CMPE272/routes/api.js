@@ -47,14 +47,58 @@ router.get('/stops/geoRange', function (req, res){
 					'$lt': parseFloat(req.query.lat2)
 				}
 			}
-			, function (err, singleStop) {
+			, function (err, Stops) {
 				if (!err) {
-					return res.send(singleStop);
+					return res.send(Stops);
 				} else {
 					return console.log(err);
 				}
 			});
 });
+
+
+var ApartmentsSchema = new mongoose.Schema(
+		{},
+		{
+			collection: 'apartments'
+		}
+		);
+
+var Apartments = db.model('apartments', ApartmentsSchema);
+
+router.get('/apartments/apartmentId/:id', function (req, res){
+	  return Apartments.findOne({'place_id':req.params.id}, function (err, singleApartment) {
+	    if (!err) {
+	      return res.send(singleApartment);
+	    } else {
+	      return console.log(err);
+	    }
+	  });
+	});
+
+router.get('/apartments/geoRange', function (req, res){
+	return Apartments.find(
+			{
+				'geometry.location.lng':{
+							'$gt': parseFloat(req.query.long1),
+							'$lt': parseFloat(req.query.long2)
+						},
+				'geometry.location.lat':{
+							'$gt': parseFloat(req.query.lat1),
+							'$lt': parseFloat(req.query.lat2)
+						}	
+								
+			}
+			, function (err, apartmentsList) {
+				if (!err) {
+					return res.send(apartmentsList);
+				} else {
+					return console.log(err);
+				}
+			});
+});
+
+
 
 module.exports = router;
 

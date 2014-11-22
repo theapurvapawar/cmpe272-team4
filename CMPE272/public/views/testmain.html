@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Directions service (complex)</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+      #panel {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        margin-left: -180px;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+      }
+       #outputDiv {
+        font-size: 20px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+var map;
+
+var geocoder;
+var directionsDisplay;
+var directionsService;
+var stepDisplay;
+var markerArray = [];
+var markersArray = [];
+var originIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=O|FFFF00|000000';
+var destinationIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=D|FF0000|000000';
+var bounds = new google.maps.LatLngBounds();
+
+
+function initialize() {
+  // Instantiate a directions service.
+  directionsService = new google.maps.DirectionsService();
+
+  // Create a map and center it on Manhattan.
+  var manhattan = new google.maps.LatLng(40.7711329, -73.9741874);
+  var mapOptions = {
+    zoom: 13,
+    center: manhattan
+  }
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  geocoder = new google.maps.Geocoder();
+
+  // Create a renderer for directions and bind it to the map.
+  var rendererOptions = {
+    map: map
+  }
+  directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions)
+
+  // Instantiate an info window to hold step text.
+  stepDisplay = new google.maps.InfoWindow();
+}
+
+function calcRoute() {
+
+  // First, remove any existing markers from the map.
+  for (var i = 0; i < markerArray.length; i++) {
+    markerArray[i].setMap(null);
+  }
+
+  // Now, clear the array itself.
+  markerArray = [];
+
+  // Retrieve the start and end locations and create
+  // a DirectionsRequest using WALKING directions.
+  var start = document.getElementById('start').value;
+  var end = document.getElementById('end').value;
+  var request = {
+      origin: start,
+      destination: end,
+      travelMode: google.maps.TravelMode.WALKING
+  };
+
+  // Route the directions and pass the response to a
+  // function to create markers for each step.
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      var warnings = document.getElementById('warnings_panel');
+      warnings.innerHTML = '<b>test</b>';
+      directionsDisplay.setDirections(response);
+      showSteps(response);
+    }
+  });
+
+
+  calculateDistances();
+
+}
+
+
+
+function calculateDistances() {
+
+var endAddress = document.getElementById('end').value;
+var startAddress = document.getElementById('start').value;
+var geocoderAddress = new google.maps.Geocoder();
+
+geocoderAddress.geocode( { 'address': startAddress}, function(results, status) {
+
+  var Startlocation;
+  var Endlocation;
+  var StartAdd;
+  var EndAdd;
+
+    Startlocation = results[0].geometry.location;
+    StartAdd = new google.maps.LatLng(Startlocation.lat(), Startlocation.lng());
+
+  geocoderAddress.geocode( { 'address': endAddress}, function(results, status) {
+    Endlocation = results[0].geometry.location;
+    EndAdd = new google.maps.LatLng(Endlocation.lat(), Endlocation.lng());
+    
+
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins:[StartAdd, startAddress],
+        destinations:[EndAdd, endAddress],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+      }, callback);
+
+  });
+  });
+}
+
+function callback(response, status) {
+  if (status != google.maps.DistanceMatrixStatus.OK) {
+    alert('Error was: ' + status);
+  } else {
+    var origins = response.originAddresses;
+    var destinations = response.destinationAddresses;
+    var outputDiv = document.getElementById('outputDiv');
+    outputDiv.innerHTML = '';
+    deleteOverlays();
+
+    for (var i = 0; i < origins.length; i++) {
+      var results = response.rows[i].elements;
+      addMarker(origins[i], false);
+      for (var j = 0; j < results.length; j++) {
+        addMarker(destinations[j], true);
+        outputDiv.innerHTML += origins[i] + ' to ' + destinations[j]
+            + ': ' + results[j].distance.text + ' in '
+            + results[j].duration.text + '<br>';
+      }
+    }
+  }
+}
+
+function deleteOverlays() {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(null);
+  }
+  markersArray = [];
+}
+
+
+function addMarker(location, isDestination) {
+  var icon;
+  if (isDestination) {
+    icon = destinationIcon;
+  } else {
+    icon = originIcon;
+  }
+  geocoder.geocode({'address': location}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      bounds.extend(results[0].geometry.location);
+      map.fitBounds(bounds);
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location,
+        icon: icon
+      });
+      markersArray.push(marker);
+    } else {
+      alert('Geocode was not successful for the following reason: '
+        + status);
+    }
+  });
+}
+
+function showSteps(directionResult) {
+  // For each step, place a marker, and add the text to the marker's
+  // info window. Also attach the marker to an array so we
+  // can keep track of it and remove it when calculating new
+  // routes.
+  var myRoute = directionResult.routes[0].legs[0];
+
+  for (var i = 0; i < myRoute.steps.length; i++) {
+    var marker = new google.maps.Marker({
+      position: myRoute.steps[i].start_location,
+      map: map
+    });
+    attachInstructionText(marker, myRoute.steps[i].instructions);
+    markerArray[i] = marker;
+  }
+}
+
+function attachInstructionText(marker, text) {
+  google.maps.event.addListener(marker, 'click', function() {
+    // Open an info window when the marker is clicked on,
+    // containing the text of the step.
+    stepDisplay.setContent(text);
+    stepDisplay.open(map, marker);
+  });
+}
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+$(window).bind("load", function() {
+  debugger;
+   document.getElementById('logo').style="display:none;";
+});
+
+    </script>
+  </head>
+  <body>
+    <div id="panel">
+    <b>Start: </b>
+    <select id="start">
+      <option value="penn station, new york, ny">Penn Station</option>
+      <option value="grand central station, new york, ny">Grand Central Station</option>
+      <option value="625 8th Avenue, New York, NY, 10018">Port Authority Bus Terminal</option>
+      <option value="staten island ferry terminal, new york, ny">Staten Island Ferry Terminal</option>
+      <option value="santa clara">santa clara</option>
+    </select>
+    <b>End: </b>
+    <select id="end" onchange="calcRoute();">
+      <option value="260 Broadway New York NY 10007">City Hall</option>
+      <option value="W 49th St & 5th Ave, New York, NY 10020">Rockefeller Center</option>
+      <option value="moma, New York, NY">MOMA</option>
+      <option value="350 5th Ave, New York, NY, 10118">Empire State Building</option>
+      <option value="253 West 125th Street, New York, NY">Apollo Theater</option>
+      <option value="san jose">san jose</option>
+    </select>
+    </div>
+    <div id="map-canvas"></div>
+    &nbsp;
+    <div id="warnings_panel" style="width:100%;height:10%;text-align:center"></div>
+    <div id="outputDiv"></div>
+
+<script type='text/javascript'>
+var ws_wsid = 'f5f09976eb2249478f15e2af39096935';
+var ws_address = 'san jose';
+var ws_width = '600';
+var ws_height = '444';
+var ws_layout = 'horizontal';
+var ws_commute = 'true';
+var ws_transit_score = 'true';
+var ws_map_modules = 'all';
+
+$.getScript("testmain.js", function(){
+
+   alert("Script loaded and executed.");
+   // Here you can use anything you defined in the loaded script
+
+});
+
+</script>
+
+<style type='text/css'>#ws-walkscore-tile{position:relative;text-align:left}#ws-walkscore-tile *{float:none;}#ws-footer a,#ws-footer a:link{font:11px/14px Verdana,Arial,Helvetica,sans-serif;margin-right:6px;white-space:nowrap;padding:0;color:#000;font-weight:bold;text-decoration:none}#ws-footer a:hover{color:#777;text-decoration:none}#ws-footer a:active{color:#b14900}</style>
+
+<div id='ws-walkscore-tile'>
+
+<div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>
+
+</div>
+</div>
+
+
+
+  </body>
+</html>
