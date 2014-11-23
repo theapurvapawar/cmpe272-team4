@@ -2,20 +2,23 @@
 	center='map.center'
 	zoom='map.zoom'
 	options="{disableDefaultUI: true}"
-	data-scale-height></ui-gmap-google-map>
+	data-scale-height>
+	<!-- <ui-gmap-marker 
+		coords="marker.coords" 
+		options="marker.options" 
+		events="marker.events" 
+		idkey="marker.id">
+    </ui-gmap-marker> -->
+    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+    </ui-gmap-markers>
+</ui-gmap-google-map>
 	
 <div class="left-content">
-	<input type="text" class="form-control" data-ng-model="map.center.latitude" />
-	<input type="text" class="form-control" data-ng-model="map.center.longitude" />
-	<input type="text" class="form-control" data-ng-model="map.zoom" />
-	<h3>List of apartments:</h3>
-	<hr style="margin: 0;">
-	<div class="separator"></div>
-	<div data-ng-repeat="apartment in apartments" class="col-xs-12">
+	<div data-ng-repeat="apartment in apartments" class="col-xs-12 apt-list-item" 
+			data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng)">
 		<h5>{{apartment.name}}</h5>
 		<div>
-			{{apartment.address}}
+			{{apartment.formatted_address}}
 		</div>
-		<hr style="margin: 0;">
 	</div>
 </div>
