@@ -1,24 +1,26 @@
-<ui-gmap-google-map 
-	center='map.center'
-	zoom='map.zoom'
-	options="{disableDefaultUI: true}"
-	data-scale-height>
-	<!-- <ui-gmap-marker 
-		coords="marker.coords" 
-		options="marker.options" 
-		events="marker.events" 
-		idkey="marker.id">
-    </ui-gmap-marker> -->
-    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
-    </ui-gmap-markers>
-</ui-gmap-google-map>
-	
-<div class="left-content">
-	<div data-ng-repeat="apartment in apartments" class="col-xs-12 apt-list-item" 
-			data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng)">
-		<h5>{{apartment.name}}</h5>
-		<div>
-			{{apartment.formatted_address}}
+<div>
+
+	<ui-gmap-google-map 
+		center='map.center'
+		zoom='map.zoom'
+		options="{disableDefaultUI: true}"
+		data-scale-height>
+		
+	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+	    </ui-gmap-markers>
+	    
+	</ui-gmap-google-map>
+
+</div>
+<div style="box-shadow: inset 0px -1px 20px 0px rgba(50, 50, 50, 0.75);">
+	<div class="container">
+		<h3 data-ng-if="apartments">Apartments near you:</h3>
+		<div data-ng-repeat="apartment in apartments" class="col-xs-12 apt-list-item" 
+				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng)">
+			<h5>{{apartment.name}}</h5>
+			<div>
+				{{apartment.formatted_address}}
+			</div>
 		</div>
 	</div>
 </div>

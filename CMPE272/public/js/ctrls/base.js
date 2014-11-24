@@ -71,7 +71,7 @@ cmpe.directive('scaleHeight', function ($window) {
 		};
 		scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
 			//$(element).height(newValue.h-50);
-			$('.angular-google-map-container').height(newValue.h-50);
+			$('.angular-google-map-container').height((newValue.h-50)/2);
 		}, true);
 
 		w.bind('resize', function () {

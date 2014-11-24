@@ -12,6 +12,8 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal){
 			
 		});
 	};
+	
+	$scope.universities = ['San Jose State University', 'Santa Clara University', 'Stanford University'];
 });
 
 cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
