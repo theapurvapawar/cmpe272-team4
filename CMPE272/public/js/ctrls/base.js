@@ -25,37 +25,31 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 				}
 			}
 	};
-
-	if (navigator.geolocation){
-		navigator.geolocation.getCurrentPosition(function(position){
-			var lat = position.coords.latitude;
-		    var long = position.coords.longitude;
-		    var diff = 0.01;
-		    $scope.panTo(lat, long);
-			$http.get('/api/apartments/geoRange?lat1='+(lat-diff)+'&long1='+(long-diff)+'&lat2='+(lat+diff)+'&long2='+(long+diff)).success(function(data){
-				
-				$scope.markers = [];
-				angular.forEach(data, function(v, i){
-					$scope.markers.push({
-						id : i,
-						latitude: v.geometry.location.lat,
-				        longitude: v.geometry.location.lng,
-				        title: name
-					});
+	
+	$scope.markers = [];
+	
+	$rootScope.getApartmentsNear = function(lat, long){
+		var diff = 0.01;
+	    $scope.panTo(lat, long);
+		$http.get('/api/apartments/geoRange?lat1='+(lat-diff)+'&long1='+(long-diff)+'&lat2='+(lat+diff)+'&long2='+(long+diff)).success(function(data){
+			var pad = $scope.markers.length+1;
+			$scope.markers = [];
+			angular.forEach(data, function(v, i){
+				$scope.markers.push({
+					id : pad+i,
+					latitude: v.geometry.location.lat,
+			        longitude: v.geometry.location.lng,
+			        title: name
 				});
-				$scope.apartments = data;
 			});
-		}, function(position){
-			alert('No Location available');
+			$scope.apartments = data;
 		});
-	}else{
-		alert('It seems like Geolocation, which is required for this page, is not enabled in your browser.');
-	}  
+	};  
 	
 	$scope.panTo = function(lat, lng){
 		$rootScope.map.center.latitude = lat;
 		$rootScope.map.center.longitude = lng;
-		$rootScope.map.zoom = 18;
+		$rootScope.map.zoom = 14;
 	};
 	
 });

@@ -19,8 +19,12 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal){
 			angular.forEach(response.data, function(v, i){
 				unis.push(v.name);
 			});
-			return unis;
+			return response.data;
 		});
+	};
+	
+	$scope.onSelect = function(item, model, label){
+		$scope.getApartmentsNear(item.geometry.location.lat, item.geometry.location.lng);
 	};
 
 });
