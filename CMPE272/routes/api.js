@@ -98,7 +98,28 @@ router.get('/apartments/geoRange', function (req, res){
 			});
 });
 
+var UniversitiesSchema = new mongoose.Schema(
+		{},
+		{
+			collection: 'universities'
+		}
+		);
 
+var Universities = db.model('universities', UniversitiesSchema);
+
+router.get('/universities', function (req, res){
+	return Universities.find(
+			{
+				'name': new RegExp(req.query.q, "i")
+			}
+			, function (err, universitiesList) {
+				if (!err) {
+					return res.send(universitiesList);
+				} else {
+					return console.log(err);
+				}
+			});
+});
 
 module.exports = router;
 

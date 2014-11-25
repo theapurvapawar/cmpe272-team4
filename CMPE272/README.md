@@ -20,10 +20,14 @@ Exposed JSON Object(s) / data via REST.
 
 4. '/api/apartments/geoRange?lat1=[Latitude-1]&longt1=[Longitude-1]&lat2=[Latitude-2]&long2=[Longitude-2]' works like point 2.
 
+5. '/api/universities?q=[Query+String]' will return an array of JSON Objects. Partial Matches supported.
+
 
 Uploaded Data to Blumix MongoLab service. (updated Blumix app to test API online.) Above APIs work live on app URLs.
 
 Uploaded Sample Apartment data to MongoLab
+
+Uploaded University data to MongoLab
 
 ### Tools
 
