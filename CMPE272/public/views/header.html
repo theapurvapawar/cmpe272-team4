@@ -4,17 +4,10 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="col-xs-8" style="padding: 0;">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for your school here"> <span
-							class="input-group-btn"
-							data-ng-model="searchTxt"
-							data-typeahead="university for university in universities | filter:$viewValue | limitTo:8">
-							<button class="btn btn-default" type="button">
-								<i class="fa fa-search"></i>
-							</button>
-						</span>
-					</div>
+					<input type="text" data-ng-model="asyncSelected"
+						placeholder="Search for your university..."
+						data-typeahead="address for address in getLocation($viewValue)"
+						data-typeahead-loading="loadingLocations" class="form-control">
 				</div>
 				<div class="col-xs-4 text-right" style="padding: 0;padding-top: 7px;">
 					<a data-ng-if="!user" data-ng-click="launchAuth()" class="pointer">Login

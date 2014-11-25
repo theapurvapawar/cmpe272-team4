@@ -9,22 +9,31 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal){
 		modalInstance.result.then(function (user) {
 			$scope.user = user;
 		}, function () {
-			
+
 		});
 	};
-	
-	$scope.universities = ['San Jose State University', 'Santa Clara University', 'Stanford University'];
+
+	$scope.getLocation = function(val) {
+		return $http.get('/api/universities?q='+val).then(function(response){
+			var unis = [];
+			angular.forEach(response.data, function(v, i){
+				unis.push(v.name);
+			});
+			return unis;
+		});
+	};
+
 });
 
 cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
-	
+
 	$scope.user = {
 			username : '',
 			password : ''
 	};
-	
+
 	$scope.login = function(){
 		$modalInstance.close($scope.user);
 	};
-	
+
 });
