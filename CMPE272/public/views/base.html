@@ -12,11 +12,11 @@
 	</ui-gmap-google-map>
 
 </div>
-<div style="box-shadow: inset 0px -1px 20px 0px rgba(50, 50, 50, 0.75);">
+<div style="box-shadow: inset 0px -1px 20px 0px rgba(50, 50, 50, 0.75); min-height: 500px;">
 	<div class="container">
 		<h3 data-ng-if="apartments">Apartments near you:</h3>
 		<div data-ng-repeat="apartment in apartments" class="col-xs-12 apt-list-item" 
-				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng)">
+				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng, 16)">
 			<h5>{{apartment.name}}</h5>
 			<div>
 				{{apartment.formatted_address}}

@@ -12,7 +12,7 @@
 
 	<div data-ui-view="header"></div>
 	
-	<div data-ui-view="container" style="min-height: 800px;"></div>
+	<div data-ui-view="container"></div>
 
 
 	<footer class="footer">
@@ -21,6 +21,23 @@
 		</div>
 	</footer>
 </body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1575662755980271',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <!-- List Plugins -->
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
