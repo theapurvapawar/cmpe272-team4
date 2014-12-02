@@ -12,6 +12,8 @@
 
 Exposed JSON Object(s) / data via REST.
 
+GET -
+
 1. '/api/stops/stopId/[stop_id]' returns a single JSON object.
 
 2. '/api/stops/geoRange?lat1=[Latitude-1]&longt1=[Longitude-1]&lat2=[Latitude-2]&long2=[Longitude-2]' returns set of JSON Objects existing between the given range.
@@ -22,6 +24,20 @@ Exposed JSON Object(s) / data via REST.
 
 5. '/api/universities?q=[Query+String]' will return an array of JSON Objects. Partial Matches supported.
 
+POST -
+
+1. '/api/user/auth' post new user info and get back json object (returns existing object if user exists)
+
+Format -
+
+{
+			email: String,
+			accessToken: String,
+			fName: String,
+			lName: String,
+			fb_picture: String
+			
+}
 
 Uploaded Data to Blumix MongoLab service. (updated Blumix app to test API online.) Above APIs work live on app URLs.
 

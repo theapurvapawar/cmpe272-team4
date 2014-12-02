@@ -121,5 +121,50 @@ router.get('/universities', function (req, res){
 			});
 });
 
+
+var UserSchema = new mongoose.Schema(
+		{
+			email: String,
+			accessToken: String,
+			fName: String,
+			lName: String,
+			fb_picture: String
+		},
+		{
+			collection: 'user'
+		}
+		);
+
+var User = db.model('user', UserSchema);
+
+
+
+router.post('/user/auth',function(req, res){	
+	
+	User.findOne({'email':req.body.email}, function (err, foundUser) {
+	    if (!err) {
+	    	if(foundUser!==null) {return res.json(foundUser);}
+	    	else {
+	    		var insertUser = new User({
+	    			email: req.body.email,
+	    			accessToken: req.body.accessToken,
+	    			fName: req.body.fName,
+	    			lName: req.body.lName,
+	    			fb_picture: req.body.fb_picture
+	    		});
+	    		
+	    		insertUser.save(function(err, insertUser){
+	    			if (err) {return console.error(err);}
+	    			  console.dir(insertUser);
+	    			  res.json(insertUser);
+	    		});
+	    	}
+	    } else {
+	    	return console.log(err);
+	    }
+	  });
+	
+});
+
 module.exports = router;
 
