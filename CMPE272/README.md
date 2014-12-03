@@ -24,6 +24,10 @@ GET -
 
 5. '/api/universities?q=[Query+String]' will return an array of JSON Objects. Partial Matches supported.
 
+6. '/api/user/logout' destroys session and responds with HTTP status 200 for true. Responds with status 400 for false/error
+
+7. '/api/forwardRequest?q=[URL]' forwards request to specified URL and responds accordingly.
+
 POST -
 
 1. '/api/user/auth' post new user info and get back json object (returns existing object if user exists)
@@ -44,6 +48,8 @@ Uploaded Data to Blumix MongoLab service. (updated Blumix app to test API online
 Uploaded Sample Apartment data to MongoLab
 
 Uploaded University data to MongoLab
+
+Basic Session management implemented.
 
 ### Tools
 
