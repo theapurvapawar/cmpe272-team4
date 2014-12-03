@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var session = require('express-session');
+
+var sess;
+
 
 router.get('/', function (req, res) {  
 	res.send('CMPE 272 API Base. Nothing to be seen here. API page works.');  
@@ -137,13 +141,17 @@ var UserSchema = new mongoose.Schema(
 
 var User = db.model('user', UserSchema);
 
-
+/*-----Session and Auth------*/
 
 router.post('/user/auth',function(req, res){	
 	
 	User.findOne({'email':req.body.email}, function (err, foundUser) {
 	    if (!err) {
-	    	if(foundUser!==null) {return res.json(foundUser);}
+	    	if(foundUser!==null) {
+	    		sess = req.session;
+	    		sess.user = foundUser;
+	    		return res.json(foundUser);
+	    	}
 	    	else {
 	    		var insertUser = new User({
 	    			email: req.body.email,
@@ -155,8 +163,10 @@ router.post('/user/auth',function(req, res){
 	    		
 	    		insertUser.save(function(err, insertUser){
 	    			if (err) {return console.error(err);}
-	    			  console.dir(insertUser);
-	    			  res.json(insertUser);
+	    			  	//console.dir(insertUser);
+	    				sess=req.session;
+	    				sess.user = insertUser;
+	    				res.json(insertUser);
 	    		});
 	    	}
 	    } else {
@@ -164,6 +174,32 @@ router.post('/user/auth',function(req, res){
 	    }
 	  });
 	
+});
+
+router.get('/user/logout',function(req, res){
+	req.session.destroy(function(err){
+		if(err){
+			console.log(err);
+			res.status(400).end();
+		}
+		else
+		{
+			console.log("Logout successful");
+			res.status(200).end();
+		}
+	});
+});
+
+/*-----Session and Auth ends------*/
+
+router.get('/forwardRequest',function(req, res){
+	var request = require('request');
+	request(req.query.q, function (error, response, body) {
+	  if (!error && response.statusCode === 200) {
+	    //console.log(body); // Print the body of response.
+	    res.send(body);
+	  }
+	});
 });
 
 module.exports = router;
