@@ -22,7 +22,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal){
 			return response.data;
 		});
 	};
-	
+
 	$scope.onSelect = function(item, model, label){
 		$scope.getApartmentsNear(item.geometry.location.lat, item.geometry.location.lng);
 	};
@@ -37,7 +37,28 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
 	};
 
 	$scope.login = function(){
-		$modalInstance.close($scope.user);
+		FB.login(function(response) {
+			if (response.status === 'connected') {
+				var accessToken = response.authResponse.accessToken;
+				FB.api('/me', function(resp) {
+					var email = resp.email;
+					console.log(resp);
+					$http.post('/api/user/auth', {
+						email: email,
+						accessToken: accessToken,
+						fName: resp.first_name,
+						lName: resp.last_name,
+						fb_picture: 'https://graph.facebook.com/'+resp.id+'/picture?width=640&height=640'
+					}).success(function(data){
+						$modalInstance.close(data);
+					});
+				});
+			} else if (response.status === 'not_authorized') {
+				alert('You will need to authorize us to use your Facebook account')
+			} else {
+				alert('You are not logged into Facebook');
+			}
+		}, {scope: 'public_profile,email'});
 	};
 
 });
