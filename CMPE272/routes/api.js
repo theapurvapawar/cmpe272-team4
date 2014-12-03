@@ -177,13 +177,14 @@ router.post('/user/auth',function(req, res){
 });
 
 router.get('/user/logout',function(req, res){
-	req.session.destroy(function(err){
+	sess.destroy(function(err){
 		if(err){
 			console.log(err);
 			res.status(400).end();
 		}
 		else
 		{
+			res.clearCookie('connect.sid', { path: '/' });
 			console.log("Logout successful");
 			res.status(200).end();
 		}
