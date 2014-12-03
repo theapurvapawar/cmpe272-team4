@@ -192,9 +192,9 @@ router.get('/user/logout',function(req, res){
 
 /*-----Session and Auth ends------*/
 
-router.get('/forwardRequest',function(req, res){
+router.post('/forwardRequest',function(req, res){
 	var request = require('request');
-	request(req.query.q, function (error, response, body) {
+	request(req.body.url, function (error, response, body) {
 	  if (!error && response.statusCode === 200) {
 	    //console.log(body); // Print the body of response.
 	    res.send(body);

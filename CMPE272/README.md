@@ -26,13 +26,11 @@ GET -
 
 6. '/api/user/logout' destroys session and responds with HTTP status 200 for true. Responds with status 400 for false/error
 
-7. '/api/forwardRequest?q=[URL]' forwards request to specified URL and responds accordingly.
-
 POST -
 
 1. '/api/user/auth' post new user info and get back json object (returns existing object if user exists)
 
-Format -
+Post Format -
 
 {
 			email: String,
@@ -42,6 +40,15 @@ Format -
 			fb_picture: String
 			
 }
+
+2. '/api/forwardRequest' forwards request to specified URL and forwards response back to requesting service.
+
+Post Format -
+
+{
+	url: String
+}
+
 
 Uploaded Data to Blumix MongoLab service. (updated Blumix app to test API online.) Above APIs work live on app URLs.
 
