@@ -3,7 +3,14 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var session = require('express-session');
 
-var sess;
+
+router.use(session({
+secret: 'thisKeyIsSupposedToBeSecret',
+resave: false,
+saveUninitialized: true
+}));
+
+var sess = null;
 
 
 router.get('/', function (req, res) {  
@@ -20,14 +27,14 @@ db.once('open', function callback () {});
 var VTAStopsSchema = new mongoose.Schema(
 		{},
 		{
-			collection: 'stops'
+			collection: 'bayAreaStops'
 		}
 );
 
-var Stops = db.model('stops', VTAStopsSchema);
+var Stops = db.model('bayAreaStops', VTAStopsSchema);
 
 router.get('/stops/stopId/:id', function (req, res){
-	return Stops.findOne({'RTI_STOP':parseInt(req.params.id)}, function (err, singleStop) {
+	return Stops.findOne({'_id':parseInt(req.params.id)}, function (err, singleStop) {
 		if (!err) {
 			return res.send(singleStop);
 		} else {
@@ -177,7 +184,8 @@ router.post('/user/auth',function(req, res){
 });
 
 router.get('/user/logout',function(req, res){
-	sess.destroy(function(err){
+	
+	req.session.destroy(function(err){
 		if(err){
 			console.log(err);
 			res.status(400).end();
@@ -189,6 +197,18 @@ router.get('/user/logout',function(req, res){
 			res.status(200).end();
 		}
 	});
+});
+
+router.get('/user/checkLogged',function(req, res){
+	
+	if(sess===null){
+		res.send(sess);
+		console.log("null");
+	}
+	else{
+		res.send(sess.user);
+		console.log("user");
+	}
 });
 
 /*-----Session and Auth ends------*/
