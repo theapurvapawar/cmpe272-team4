@@ -23,6 +23,11 @@ cmpe.config(function($stateProvider, $urlRouterProvider){
 					controller: 'baseCtrl'
 				}
 			}
+		})
+		.state('root.base.search', {
+			url: '/search/:lat/:lng',
+			templateUrl : 'views/search.html',
+			controller : 'searchCtrl'
 		});
 	
 });

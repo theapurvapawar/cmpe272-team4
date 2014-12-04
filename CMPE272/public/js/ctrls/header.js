@@ -1,4 +1,4 @@
-cmpe.controller('headerCtrl', function($scope, $http, $modal){
+cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
 	$scope.launchAuth = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/modals/login.html',
@@ -24,7 +24,8 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal){
 	};
 
 	$scope.onSelect = function(item, model, label){
-		$scope.getApartmentsNear(item.geometry.location.lat, item.geometry.location.lng);
+		//$scope.getApartmentsNear(item.geometry.location.lat, item.geometry.location.lng);
+		$state.transitionTo('root.base.search', {lat: item.geometry.location.lat, lng : item.geometry.location.lng});
 	};
 
 });

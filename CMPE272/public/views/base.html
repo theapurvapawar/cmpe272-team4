@@ -1,26 +1,20 @@
-<div>
+<div >
 
 	<ui-gmap-google-map 
 		center='map.center'
 		zoom='map.zoom'
 		options="{disableDefaultUI: true}"
+		style="position: fixed;left: 0; right: 0; top: 0; bottom: 0"
 		data-scale-height>
 		
 	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
 	    </ui-gmap-markers>
 	    
 	</ui-gmap-google-map>
+	
+	<div style="position: absolute;left: 0; right: 0; top: 0; bottom: 0"></div>
 
 </div>
-<div style="box-shadow: inset 0px -1px 20px 0px rgba(50, 50, 50, 0.75); min-height: 500px;">
-	<div class="container">
-		<h3 data-ng-if="apartments">Apartments near you:</h3>
-		<div data-ng-repeat="apartment in apartments" class="col-xs-12 apt-list-item" 
-				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng, 16)">
-			<h5>{{apartment.name}}</h5>
-			<div>
-				{{apartment.formatted_address}}
-			</div>
-		</div>
-	</div>
+<div style="z-index: 1029;margin-top: 500px;">
+	<div data-ui-view></div>
 </div>

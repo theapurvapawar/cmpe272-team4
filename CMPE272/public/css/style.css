@@ -1,4 +1,8 @@
 @CHARSET "US-ASCII";
+
+a:hover{
+	text-decoration: none;
+}
 .angular-google-map-container { 
 	margin-top: 50px; 
 }
@@ -14,11 +18,13 @@
 .apt-list-item{
 	padding-bottom: 15px;
 	padding-top: 5px;
+	background: rgba(255, 255, 255, 0.8);
 }
 
 .apt-list-item:hover{
 	background: lightgrey;
 }
+
 
 .footer{
 	width: 100%;
