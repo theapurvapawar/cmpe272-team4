@@ -34,7 +34,7 @@ var VTAStopsSchema = new mongoose.Schema(
 var Stops = db.model('bayAreaStops', VTAStopsSchema);
 
 router.get('/stops/stopId/:id', function (req, res){
-	return Stops.findOne({'_id':parseInt(req.params.id)}, function (err, singleStop) {
+	return Stops.findOne({'_id':req.params.id}, function (err, singleStop) {
 		if (!err) {
 			return res.send(singleStop);
 		} else {
