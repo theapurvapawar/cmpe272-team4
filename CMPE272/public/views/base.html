@@ -1,18 +1,22 @@
-<div >
-
+<div>
+  
 	<ui-gmap-google-map 
 		center='map.center'
 		zoom='map.zoom'
 		options="{disableDefaultUI: true}"
 		style="position: fixed;left: 0; right: 0; top: 0; bottom: 0"
 		data-scale-height>
-		
-	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+	<div ng-repeat="mark in markers">
+	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="'onClick'" events="'markersEvents'">
+	    	<ui-gmap-windows show="'show'">
+	    		{{mark.name}}<!--  <div ng-non-bindable>{{markers}}</div>-->
+        	</ui-gmap-windows>
 	    </ui-gmap-markers>
 	    
+	    <ui-gmap-markers models="univmarkers" coords="'self'" icon="'icon'">
+	    </ui-gmap-markers>
+	 </div>
 	</ui-gmap-google-map>
-	
-	<div style="position: absolute;left: 0; right: 0; top: 0; bottom: 0"></div>
 
 </div>
 <div style="z-index: 1029;margin-top: 500px;">
