@@ -22,9 +22,11 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 				console.log(distance(lat,long,v.geometry.location.lat,v.geometry.location.lng));
 				var dist=distance(lat,long,v.geometry.location.lat,v.geometry.location.lng);
 				if(dist<1)
-				var image='http://ruralshores.com/assets/marker-icon.png';
+				var image='/assets/images/green.png';
 				if(dist>1 && dist<1.5)
-				var image='http://www.portland5.com/sites/default/files/venue/marker_yellow.png';
+				var image='/assets/images/yellow1.png';
+				if(dist>1.5)
+				var image='/assets/images/red.png'
 				
 				$rootScope.markers.push({
 					id : pad+i,	

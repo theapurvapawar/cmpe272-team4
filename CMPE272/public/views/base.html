@@ -6,16 +6,18 @@
 		options="{disableDefaultUI: true}"
 		style="position: fixed;left: 0; right: 0; top: 0; bottom: 0"
 		data-scale-height>
-	<div ng-repeat="mark in markers">
+	<div ng-repeat="mark in markers track by $index" position="{{mark.id}}" style="'white-space:nowrap'">
 	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="'onClick'" events="'markersEvents'">
 	    	<ui-gmap-windows show="'show'">
-	    		{{mark.name}}<!--  <div ng-non-bindable>{{markers}}</div>-->
+	    		{{this.apartments[$index].name}}
         	</ui-gmap-windows>
+        	<ui-gmap-polylines models="trackings" path="'geotracks'" static="true"></ui-gmap-polylines>
 	    </ui-gmap-markers>
+	 </div> 
 	    
 	    <ui-gmap-markers models="univmarkers" coords="'self'" icon="'icon'">
 	    </ui-gmap-markers>
-	 </div>
+	 
 	</ui-gmap-google-map>
 
 </div>
