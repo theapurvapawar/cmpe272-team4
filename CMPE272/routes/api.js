@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 });
 
 
-mongoose.connect('mongodb://IbmCloud_tquh43sj_t83fg534_4jq4ihh5:D_ShaT44kapjLq0Urn3czn6yJqAIr6j5@ds055210.mongolab.com:55210/IbmCloud_tquh43sj_t83fg534');
+mongoose.connect('ec2user@ec2-54-67-9-17.us-west-1.compute.amazonaws.com:27017/cmpe272');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
