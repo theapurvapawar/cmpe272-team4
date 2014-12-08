@@ -1,13 +1,25 @@
 <div class="container">
-	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5)">
+	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5); margin-bottom: 20px;">
 		<div class="col-xs-12">
 			<h3>{{apartment.name}}</h3>
 			<div style="font-size: 22px">
 				<p><b>Address:</b> {{apartment.formatted_address}}</p>
 				<p><b>Phone #:</b> {{apartment.formatted_phone_number}}</p>
 				<p>Office Open now? <span data-ng-if="apartment.opening_hours.open_now" class="text-success">Yes</span><span class="text-danger" data-ng-if="!apartment.opening_hours.open_now">No</span></p>
-				<p><a class="pointer" data-ng-click="postListing()">Post a listing to this apartment</a></p>
+				<p><a class="pointer" data-ng-click="postListing()" data-ng-if="user">Post a listing to this apartment</a></p>
 				<p><a target="_blank" data-ng-href="{{apartment.url}}">Social</a> | <a target="_blank" data-ng-href="{{apartment.website}}">Website</a></p>
+			</div>
+		</div>
+		<div class="col-xs-12" data-ng-if="listings">
+			<h3>Listings:</h3>
+			<div data-ng-repeat="listing in listings" style="font-size: 14px">
+				<div style="font-size: 24px;float: right;">
+					<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
+				</div>
+				<h4 style="margin: 0;">{{listing.desc}}</h4>
+				<div><b>Bedrooms:</b> {{listing.noOfBedrooms}} | <b>Bathrooms:</b> {{listing.noOfBathrooms}} | <b>Rent:</b> {{listing.rent}}</div>
+				<div><b>Amenities:</b> {{listing.amenities}}</div>
+				<div><b>Contact:</b> {{listing.contact}}</div>
 			</div>
 		</div>
 	</div>

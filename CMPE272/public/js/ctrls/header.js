@@ -1,4 +1,4 @@
-cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
+cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope){
 	$scope.launchAuth = function(){
 		var modalInstance = $modal.open({
 			templateUrl: 'views/modals/login.html',
@@ -7,7 +7,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
 		});
 
 		modalInstance.result.then(function (user) {
-			$scope.user = user;
+			$rootScope.user = user;
 		}, function () {
 
 		});
@@ -30,8 +30,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
 	
 	$http.get('/authApi/getUser').success(function(data){
 		if(data._id){
-			console.log(data);
-			$scope.user = data;
+			$rootScope.user = data;
 		}
 	});
 	
