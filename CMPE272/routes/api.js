@@ -149,7 +149,16 @@ var UserSchema = new mongoose.Schema(
 var User = db.model('user', UserSchema);
 
 var ListingsSchema = new mongoose.Schema(
-		{},
+		{
+			noOfBedrooms: String,
+			noOfBathrooms: String,
+			rent: String,
+			amenities: String,
+			desc: String,
+			contact: String,
+			placeId: String,
+			userId: String
+		},
 		{
 			collection: 'listings'
 		}
@@ -168,9 +177,19 @@ router.get('/listings/:id', function(req, res){
 });
 
 router.post('/listings', function(req, res){
-	Listings.insert(req.json, function(err, response, body){
+	var listing = new Listings({
+		noOfBedrooms: req.body.noOfBedrooms,
+		noOfBathrooms: req.body.noOfBathrooms,
+		rent: req.body.rent,
+		amenities: req.body.amenities,
+		desc: req.body.desc,
+		contact: req.body.contact,
+		placeId: req.body.placeId,
+		userId: req.user._userid
+	});
+	listing.save(function(err, response, body){
 		if(!err){
-			return response.status(200).end();
+			return res.status(200).end();
 		} else {
 			return console.log(err);
 		}
