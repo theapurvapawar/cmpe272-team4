@@ -83,7 +83,7 @@ passport.use(new FacebookStrategy({
 //User which basically set the user to req.user and establish a session via a cookie set in the user’s browser
 passport.serializeUser(function(user, done) {
 	console.log("serializeUser");
-  done(null, user);
+  done(null, user.id);
 });
 
 

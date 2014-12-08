@@ -14,8 +14,8 @@ var passport = require('../config/auth');
 		    if (!user) { return res.redirect('/login'); }
 		    req.logIn(user, function(err) {
 		      if (err) { return next(err); }
-		      res.send({user : req.user});
-		      //res.redirect('/');
+		      //res.send({user : req.user});
+		      res.redirect('/');
 		    });
 		  })(req, res, next);
 		});
