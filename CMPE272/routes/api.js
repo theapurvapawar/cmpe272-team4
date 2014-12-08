@@ -177,23 +177,28 @@ router.get('/listings/:id', function(req, res){
 });
 
 router.post('/listings', function(req, res){
-	var listing = new Listings({
-		noOfBedrooms: req.body.noOfBedrooms,
-		noOfBathrooms: req.body.noOfBathrooms,
-		rent: req.body.rent,
-		amenities: req.body.amenities,
-		desc: req.body.desc,
-		contact: req.body.contact,
-		placeId: req.body.placeId,
-		userId: req.user._userid
-	});
-	listing.save(function(err, response, body){
-		if(!err){
-			return res.status(200).end();
-		} else {
-			return console.log(err);
-		}
-	});
+	if(req.user){
+		var listing = new Listings({
+			noOfBedrooms: req.body.noOfBedrooms,
+			noOfBathrooms: req.body.noOfBathrooms,
+			rent: req.body.rent,
+			amenities: req.body.amenities,
+			desc: req.body.desc,
+			contact: req.body.contact,
+			placeId: req.body.placeId,
+			userId: req.user._id
+		});
+		listing.save(function(err, response, body){
+			if(!err){
+				return res.status(200).end();
+			} else {
+				return console.log(err);
+			}
+		});
+	}
+	else {
+		res.status(403).end();
+	}
 });
 
 router.post('/listings/:id', function(req, res){
