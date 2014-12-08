@@ -15,6 +15,7 @@ var passport = require('../config/auth');
 		    req.logIn(user, function(err) {
 		      if (err) { return next(err); }
 		      res.send({user : req.user});
+		      //res.redirect('/');
 		    });
 		  })(req, res, next);
 		});
@@ -56,7 +57,8 @@ var passport = require('../config/auth');
 	});
 	
 	router.get('/getUser', function (req, res){
-		//console.log(req.user);
+		console.log('============');
+		console.log(req.user);
 		try {
 			if(req.user== undefined)
 				res.send("nothing");

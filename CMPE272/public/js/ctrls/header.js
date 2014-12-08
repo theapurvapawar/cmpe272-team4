@@ -25,12 +25,16 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
 
 	$scope.onSelect = function(item, model, label){
 		//$scope.getApartmentsNear(item.geometry.location.lat, item.geometry.location.lng);
-		$state.transitionTo('root.base.search', {lat: item.geometry.location.lat, lng : item.geometry.location.lng});
+		$state.transitionTo('root.base.search', {lat: item.geometry.location.lat, lng : item.geometry.location.lng, universityName : label});
 	};
+	
+	$http.get('/authApi/getUser').success(function(data){
+		console.log(data);
+	});
 
 });
 
-cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
+cmpe.controller('authCtrl', function($scope, $http, $modalInstance, $window){
 
 	$scope.user = {
 			username : '',
@@ -38,7 +42,7 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
 	};
 
 	$scope.login = function(){
-		FB.login(function(response) {
+		/*FB.login(function(response) {
 			if (response.status === 'connected') {
 				var accessToken = response.authResponse.accessToken;
 				FB.api('/me', function(resp) {
@@ -59,7 +63,11 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance){
 			} else {
 				alert('You are not logged into Facebook');
 			}
-		}, {scope: 'public_profile,email'});
+		}, {scope: 'public_profile,email'});*/
+		/*$http.get('/authApi/auth/facebook').success(function(data){
+			console.log(data);
+		});*/
+		$window.location.href = '/authApi/auth/facebook';
 	};
 
 });
