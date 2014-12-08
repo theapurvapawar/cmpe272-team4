@@ -18,10 +18,10 @@
 						<a style="color: white;" class="pointer">Post a listing</a> | 
 						<span class="dropdown" data-dropdown>
 							<a class="dropdown-toggle pointer" style="color: white;" data-dropdown-toggle>
-								<img data-ng-src="{{user.fb_picture}}" style="width: 32px; height: 32px;margin-top: -6px;"> {{user.fName}} <i class="fa fa-caret-down"></i>
+								<img data-ng-src="{{user.fb_picture}}" style="width: 32px; height: 32px;margin-top: -6px;"> {{user.fname}} <i class="fa fa-caret-down"></i>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 12px;">
-								<li><a class="pointer">Logout</a></li>
+								<li><a class="pointer" data-ng-click="logout()">Logout</a></li>
 							</ul>
 						</span> 
 					</span>

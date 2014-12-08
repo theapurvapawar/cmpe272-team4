@@ -29,8 +29,17 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state){
 	};
 	
 	$http.get('/authApi/getUser').success(function(data){
-		console.log(data);
+		if(data._id){
+			console.log(data);
+			$scope.user = data;
+		}
 	});
+	
+	$scope.logout = function(){
+		$http.get('/authApi/logout').success(function(data){
+			$scope.user = null;
+		});
+	};
 
 });
 
