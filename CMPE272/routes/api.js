@@ -149,7 +149,7 @@ var UserSchema = new mongoose.Schema(
 var User = db.model('user', UserSchema);
 
 /*-----Session and Auth------*/
-/*
+
 router.post('/user/auth',function(req, res){	
 	
 	User.findOne({'email':req.body.email}, function (err, foundUser) {
@@ -210,7 +210,7 @@ router.get('/user/checkLogged',function(req, res){
 		console.log("user");
 	}
 });
-*/
+
 /*-----Session and Auth ends------*/
 
 router.post('/forwardRequest',function(req, res){

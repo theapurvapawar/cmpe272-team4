@@ -25,9 +25,14 @@ cmpe.config(function($stateProvider, $urlRouterProvider){
 			}
 		})
 		.state('root.base.search', {
-			url: '/search/:lat/:lng',
+			url: '/search/:lat/:lng/:universityName',
 			templateUrl : 'views/search.html',
 			controller : 'searchCtrl'
+		})
+		.state('root.base.apartment', {
+			url: '/search/:placeID',
+			templateUrl : 'views/apartment.html',
+			controller : 'apartmentCtrl'
 		});
 	
 });

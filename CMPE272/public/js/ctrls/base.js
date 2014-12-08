@@ -1,22 +1,23 @@
 cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 	$rootScope.map = { center: { latitude: 37.6, longitude: -122.2 }, zoom: 10,  mapTypeId: google.maps.MapTypeId.ROADMAP };
 	
-	$scope.markers = [];
-	$scope.univmarkers=[];
+	$rootScope.markers = [];
+	$rootScope.univmarkers=[];
 	var infoWindow = new google.maps.InfoWindow();
-	$rootScope.getApartmentsNear = function(lat, long){
+	$rootScope.getApartmentsNear = function(lat, long, universityName){
+		console.log(universityName)
 		var diff = 0.03;
-		$scope.markers = [];
+		$rootScope.markers = [];
 		
-		$scope.univmarkers=[];
-	    $scope.panTo(lat, long, 14, google.maps.MapTypeId.ROADMAP);
-	    var url = 'https://maps.googleapis.com/maps/api/place/radarsearch/json?location='+lat+','+long+'&radius=5000&types=real_estate_agency&key=AIzaSyAUwMUP0T2KT_aZaJK5ukT6VZoX6rOpUgo';
-	    var localUrl = '/api/apartments/geoRange?lat1='+(lat-diff)+'&long1='+(long-diff)+'&lat2='+(lat+diff)+'&long2='+(long+diff);
-		$http.get(localUrl/*'/api/forwardRequest', { url : url}*/).success(function(data){
-			var pad = $scope.markers.length+1;
+		$rootScope.univmarkers=[];
+		$rootScope.panTo(lat, long, 14, google.maps.MapTypeId.ROADMAP);
+	    var url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=apartments+near'
+	    		+'+'+universityName+'&key=AIzaSyAUwMUP0T2KT_aZaJK5ukT6VZoX6rOpUgo';
+		$http.post('/api/forwardRequest', { url : url}).success(function(data){
+			var pad = $rootScope.markers.length+1;
 			
 			
-			angular.forEach(data, function(v, i){
+			angular.forEach(data.results, function(v, i){
 				//marker.options = {animation:google.maps.Animation.BOUNCE};
 				console.log(distance(lat,long,v.geometry.location.lat,v.geometry.location.lng));
 				var dist=distance(lat,long,v.geometry.location.lat,v.geometry.location.lng);
@@ -25,7 +26,7 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 				if(dist>1 && dist<1.5)
 				var image='http://www.portland5.com/sites/default/files/venue/marker_yellow.png';
 				
-				$scope.markers.push({
+				$rootScope.markers.push({
 					id : pad+i,	
 					latitude: v.geometry.location.lat,
 			        longitude: v.geometry.location.lng,
@@ -34,7 +35,7 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 				});
 				
 				var univ_icon="http://www.labtechsoftware.com/images/icon-university-64.png";
-				$scope.univmarkers.push({
+				$rootScope.univmarkers.push({
 					id: pad+i,
 					latitude: lat,
 					longitude: long,
@@ -64,23 +65,23 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 			
 				
 			 
-			$scope.apartments = data;
+			$rootScope.apartments = data.results;
 		});
 	}; 
 	
-	$scope.markersEvents = { mouseover: function (gMarker, eventName, model) {
+	$rootScope.markersEvents = { mouseover: function (gMarker, eventName, model) {
         model.show = true;
         $scope.$apply();
     }
 	};
 	
-	$scope.markers.onClick = function() {
+	$rootScope.markers.onClick = function() {
         console.log("Clicked!");
-        $scope.markers.show = !$scope.markers.show;
-        $scope.$apply();
+        $rootScope.markers.show = !$rootScope.markers.show;
+        $rootScope.$apply();
     };
 	
-	$scope.panTo = function(lat, lng, zoom, mapid){
+	$rootScope.panTo = function(lat, lng, zoom, mapid){
 		$rootScope.map.center.latitude = lat;
 		$rootScope.map.center.longitude = lng;
 		$rootScope.map.zoom = zoom;
