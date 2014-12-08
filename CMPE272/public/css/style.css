@@ -31,3 +31,14 @@ a:hover{
 	background-color: #f5f5f5;
 }
 
+.map-floater{
+	z-index: 1029;
+	margin-top: 500px;
+}
+
+@media ( max-width : 767px) {
+	.map-floater{
+		z-index: 1029;
+		margin-top: 250px;
+	}
+}

@@ -1,11 +1,12 @@
 <div class="container">
-	<div class="row" style="background: rgba(255, 255, 255, 0.8);">
+	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5)">
 		<div class="col-xs-12">
 			<h3>{{apartment.name}}</h3>
 			<div style="font-size: 22px">
 				<p><b>Address:</b> {{apartment.formatted_address}}</p>
 				<p><b>Phone #:</b> {{apartment.formatted_phone_number}}</p>
 				<p>Office Open now? <span data-ng-if="apartment.opening_hours.open_now" class="text-success">Yes</span><span class="text-danger" data-ng-if="!apartment.opening_hours.open_now">No</span></p>
+				<p><a class="pointer" data-ng-click="postListing()">Post a listing to this apartment</a></p>
 				<p><a target="_blank" data-ng-href="{{apartment.url}}">Social</a> | <a target="_blank" data-ng-href="{{apartment.website}}">Website</a></p>
 			</div>
 		</div>

@@ -1,0 +1,38 @@
+<div class="modal-body">
+	<div class="row">
+		<div class="col-xs-12">
+			<h5>New Listing:</h5>
+			<form data-ng-submit="post">
+				<div class="separator"></div>
+				<label>Number of bedrooms:</label>
+				<select class="form-control" data-ng-model="newApt.bedroom" data-ng-options="bedroom.number for bedroom in bedroomOpts"></select>
+				<div class="separator"></div>
+				<label>Number of bathrooms:</label>
+				<select class="form-control" data-ng-model="newApt.bathroom" data-ng-options="bathroom.number for bathroom in bathroomOpts"></select>
+				<div class="separator"></div>
+				<label>Rent per month:</label>
+				<input type="number" data-ng-model="newApt.rent" class="form-control">
+				<div class="separator"></div>
+				<label>Apartment amenities:</label>
+				<textarea class="form-control" style="resize: none;" data-ng-model="newApt.amenities"></textarea>
+				<div class="separator"></div>
+				<label>Other Descriptions:</label>
+				<textarea class="form-control" style="resize: none;" data-ng-model="newApt.desc"></textarea>
+				<div class="separator"></div>
+				<label>How to contact you?</label>
+				<textarea class="form-control" style="resize: none;" data-ng-model="newApt.contact"></textarea>
+				<div class="separator"></div>
+				<div class="pull-right">
+					<button data-ng-click="cancel()" class="btn btn-danger">
+						Cancel
+					</button> 
+					<button data-ng-click="post()" class="btn btn-success">
+						<span data-ng-if="!posting">Post this listing</span>
+						<span data-ng-if="posting"><i class="fa fa-spinner fa-spin"></i> Posting...</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+</div>
