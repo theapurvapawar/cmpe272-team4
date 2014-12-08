@@ -148,70 +148,45 @@ var UserSchema = new mongoose.Schema(
 
 var User = db.model('user', UserSchema);
 
-/*-----Session and Auth------*/
+var ListingsSchema = new mongoose.Schema(
+		{},
+		{
+			collection: 'listings'
+		}
+		);
 
-router.post('/user/auth',function(req, res){	
-	
-	User.findOne({'email':req.body.email}, function (err, foundUser) {
+var Listings = db.model('listing', ListingsSchema);
+
+router.get('/listings/:id', function(req, res){
+	return Listings.find({"placeId":req.params.id}, function (err, listOfListings) {
 	    if (!err) {
-	    	if(foundUser!==null) {
-	    		sess = req.session;
-	    		sess.user = foundUser;
-	    		return res.json(foundUser);
-	    	}
-	    	else {
-	    		var insertUser = new User({
-	    			email: req.body.email,
-	    			accessToken: req.body.accessToken,
-	    			fName: req.body.fName,
-	    			lName: req.body.lName,
-	    			fb_picture: req.body.fb_picture
-	    		});
-	    		
-	    		insertUser.save(function(err, insertUser){
-	    			if (err) {return console.error(err);}
-	    			  	//console.dir(insertUser);
-	    				sess=req.session;
-	    				sess.user = insertUser;
-	    				res.json(insertUser);
-	    		});
-	    	}
-	    } else {
-	    	return console.log(err);
-	    }
-	  });
-	
+		      return res.send(listOfListings);
+		    } else {
+		      return console.log(err);
+		    }
+		  });
 });
 
-router.get('/user/logout',function(req, res){
-	
-	req.session.destroy(function(err){
-		if(err){
-			console.log(err);
-			res.status(400).end();
-		}
-		else
-		{
-			res.clearCookie('connect.sid', { path: '/' });
-			console.log("Logout successful");
-			res.status(200).end();
+router.post('/listings', function(req, res){
+	Listings.insert(req.json, function(err, response, body){
+		if(!err){
+			return response.status(200).end();
+		} else {
+			return console.log(err);
 		}
 	});
 });
 
-router.get('/user/checkLogged',function(req, res){
-	
-	if(sess===null){
-		res.send(sess);
-		console.log("null");
-	}
-	else{
-		res.send(sess.user);
-		console.log("user");
-	}
+router.post('/listings/:id', function(req, res){
+	Listings.remove({"_id":req.param.id}, function(err, response, body){
+		if(!err){
+			return response.status(200).end();
+		} else {
+			return console.log(err);
+		}
+	});
 });
 
-/*-----Session and Auth ends------*/
 
 router.post('/forwardRequest',function(req, res){
 	var request = require('request');
