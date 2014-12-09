@@ -63,13 +63,19 @@ passport.signup = function(email, password, name, done){
 
 
 //Passport - Local Strategy 
-passport.use(new LocalStrategy(function(email, password,done){
-  Users.findOne({ email : email},function(err,user){
+passport.use(new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password'
+	},
+	function(email, password, done){
+
+	Users.findOne({ email : email},function(err,user){
+		console.log(user);
       if(err) { return done(err); }
       if(!user){
           return done(null, false, { message: 'Incorrect username.' });
       }
-
+      
       hash( password, user.salt, function (err, hash) {
           if (err) { return done(err); }
           if (hash == user.hash) return done(null, user);
@@ -77,7 +83,6 @@ passport.use(new LocalStrategy(function(email, password,done){
       });
   });
 }));
-
 
 
 

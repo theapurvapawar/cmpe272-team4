@@ -11,7 +11,7 @@ var passport = require('../config/auth');
 		  passport.authenticate('facebook',
 				  function(err, user, info) {
 		    if (err) { return next(err); }
-		    if (!user) { return res.redirect('/login'); }
+		    if (!user) { return res.redirect('/'); }
 		    req.logIn(user, function(err) {
 		      if (err) { return next(err); }
 		      //res.send({user : req.user});
@@ -20,14 +20,24 @@ var passport = require('../config/auth');
 		  })(req, res, next);
 		});
 	
-	router.post("/auth/local"
-			,passport.authenticate('local',{
-				
-			})
-		);
+	router.post("/auth/local",
+	function(req, res, next) {
+		  passport.authenticate('local',
+				  function(err, user, info) {
+		    if (err) { return next(err); }
+		    if (!user) { return res.send({"error":"Invalid email or password"}); }
+		    req.logIn(user, function(err) {
+		      if (err) { return next(err); }
+		      res.send({user : req.user});
+		      //res.redirect('/');
+		    });
+		  })(req, res, next);
+		});
+
+
 
 	router.post("/signup", passport.userExist, function (req, res, next) {
-		console.log(req.body.email +" " +req.body.password);
+		//console.log(req.body.email +" " +req.body.password);
 		passport.saveUser(req, res, next);
 	});
 
