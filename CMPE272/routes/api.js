@@ -202,7 +202,7 @@ router.post('/listings', function(req, res){
 });
 
 router.post('/listings/delete/:id', function(req, res){    
-	Listings.remove({_id:req.param.id}, function(err, response, body){
+	Listings.remove({_id: req.params.id}, function(err, response, body){
 		if(!err){
 			return res.status(200).end();
 		} else {
