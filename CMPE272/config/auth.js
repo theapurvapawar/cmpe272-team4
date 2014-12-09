@@ -2,25 +2,67 @@ var passport = require("passport");
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var mongoose = require('mongoose');
+var hash=require('../util/hash.js');
 
 var express = require('express');
 var router = express.Router();
 
 
-
-
-mongoose.connect('mongodb://IbmCloud_tquh43sj_t83fg534_4jq4ihh5:D_ShaT44kapjLq0Urn3czn6yJqAIr6j5@ds055210.mongolab.com:55210/IbmCloud_tquh43sj_t83fg534');
+mongoose.connect('ec2user@ec2-54-183-68-182.us-west-1.compute.amazonaws.com:27017/cmpe272');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {});
 
+passport.userExist = function(req, res, next) {
+	console.log("userExist");
+	Users.count({
+        email: req.body.email
+    }, function (err, count) {
+        if (count === 0) {
+            next();
+        } else {
+            res.redirect("/signup");
+            //res.status(200).end();
+        }
+    });
+}
 
+passport.saveUser = function(req, res, next) {
+	console.log("saveUser");
+	
+	passport.signup(req.body.email, req.body.password, function(err, user){
+		if(err) throw err;
+		req.login(user, function(err){
+			if(err) return next(err);
+			return res.send({"Status":"OK"})
+		});
+	});
+}
+
+
+passport.signup = function(email, password, done){
+	console.log("Inside");
+	hash(password, function(err, salt, hash){
+		if(err) throw err;
+		// if (err) return done(err);
+		Users.create({
+			email : email,
+			salt : salt,
+			hash : hash
+		}, function(err, user){
+			if(err) throw err;
+			// if (err) return done(err);
+			console.log(user);
+			done(null, user);
+		});
+	});
+}
 
 
 //Passport - Local Strategy 
-passport.use(new LocalStrategy(function(username, password,done){
-  Users.findOne({ username : username},function(err,user){
+passport.use(new LocalStrategy(function(email, password,done){
+  Users.findOne({ email : email},function(err,user){
       if(err) { return done(err); }
       if(!user){
           return done(null, false, { message: 'Incorrect username.' });
@@ -78,7 +120,6 @@ passport.use(new FacebookStrategy({
 
 
 
-
 //serialize User and deserialize
 //User which basically set the user to req.user and establish a session via a cookie set in the user’s browser
 passport.serializeUser(function(user, done) {
@@ -108,7 +149,7 @@ passport.deserializeUser(function(id, done) {
 
 /*-----Required for passport- Users Table------*/
 var LocalUserSchema = new mongoose.Schema({
-	username: String,
+	email: { type : String , lowercase : true},
 	salt: String,
 	hash: String
 	});
