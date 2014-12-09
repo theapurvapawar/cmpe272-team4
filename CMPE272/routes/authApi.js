@@ -20,7 +20,7 @@ var passport = require('../config/auth');
 		  })(req, res, next);
 		});
 	
-	router.post("/auth/local" 
+	router.post("/auth/local"
 			,passport.authenticate('local',{
 				
 			})

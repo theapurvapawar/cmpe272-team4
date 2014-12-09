@@ -24,7 +24,7 @@ passport.userExist = function(req, res, next) {
         } else {
         	
             //res.redirect("/");
-            res.status(200).end();
+            res.json({"error":"User already exists"});
         }
     });
 }
