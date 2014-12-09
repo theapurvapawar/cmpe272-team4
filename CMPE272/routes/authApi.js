@@ -19,25 +19,20 @@ var passport = require('../config/auth');
 		    });
 		  })(req, res, next);
 		});
+	
+	router.post("/auth/local" 
+			,passport.authenticate('local',{
+				successRedirect : "/",
+				failureRedirect : "/login",
+			})
+		);
 
-
-
-	router.post('/userExist',function(req, res, next) {
-	    Users.count({
-	        username: req.body.username
-	        
-	    }, function (err, count) {
-	        if (count === 0) {
-	        	
-	            next();
-	            
-	        } else {
-	            // req.session.error = "User Exist"
-	            //res.redirect("/");
-	        	res.status(200).end();
-	        }
-	    });
+	router.post("/signup", passport.userExist, function (req, res, next) {
+		console.log(req.body.email +" " +req.body.password);
+		passport.saveUser(req, res, next);
 	});
+
+
 	
 	router.get('/logout', function(req, res){
 		req.logout();
