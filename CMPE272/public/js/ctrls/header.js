@@ -12,6 +12,20 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope
 
 		});
 	};
+	
+	$scope.launchReg = function(){
+		var modalInstance = $modal.open({
+			templateUrl: 'views/modals/register.html',
+			controller: 'regCtrl',
+			size: 'sm'
+		});
+
+		modalInstance.result.then(function (user) {
+			$rootScope.user = user;
+		}, function () {
+
+		});
+	};
 
 	$scope.getLocation = function(val) {
 		return $http.get('/api/universities?q='+val).then(function(response){
@@ -48,33 +62,43 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance, $window){
 			username : '',
 			password : ''
 	};
+	
+	$scope.logging = false;
+	$scope.doLogin = function(){
+		$http.post('/authApi/auth/local', {email: $scope.user.username, password : $scope.user.password}).success(function(){
+			console.log(data);
+			$modalInstance.close(data);
+		});
+	};
 
 	$scope.login = function(){
-		/*FB.login(function(response) {
-			if (response.status === 'connected') {
-				var accessToken = response.authResponse.accessToken;
-				FB.api('/me', function(resp) {
-					var email = resp.email;
-					console.log(resp);
-					$http.post('/api/user/auth', {
-						email: email,
-						accessToken: accessToken,
-						fName: resp.first_name,
-						lName: resp.last_name,
-						fb_picture: 'https://graph.facebook.com/'+resp.id+'/picture?width=640&height=640'
-					}).success(function(data){
-						$modalInstance.close(data);
-					});
-				});
-			} else if (response.status === 'not_authorized') {
-				alert('You will need to authorize us to use your Facebook account')
-			} else {
-				alert('You are not logged into Facebook');
+		$window.location.href = '/authApi/auth/facebook';
+	};
+
+});
+
+cmpe.controller('regCtrl', function($scope, $http, $modalInstance, $window){
+
+	$scope.user = {
+			username : '',
+			password : ''
+	};
+	
+	$scope.logging = false;
+	$scope.doLogin = function(){
+		$http.post('/authApi/signup', {email: $scope.user.username, 
+				password : $scope.user.password,
+				name : $scope.user.name
 			}
-		}, {scope: 'public_profile,email'});*/
-		/*$http.get('/authApi/auth/facebook').success(function(data){
-			console.log(data);
-		});*/
+		).success(function(data){
+			if(data.error)
+				alert(data.error);
+			else
+				$modalInstance.close(data);
+		});
+	};
+
+	$scope.login = function(){
 		$window.location.href = '/authApi/auth/facebook';
 	};
 

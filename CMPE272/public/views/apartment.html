@@ -19,7 +19,8 @@
 				<h4 style="margin: 0;">{{listing.desc}}</h4>
 				<div><b>Bedrooms:</b> {{listing.noOfBedrooms}} | <b>Bathrooms:</b> {{listing.noOfBathrooms}} | <b>Rent:</b> {{listing.rent}}</div>
 				<div><b>Amenities:</b> {{listing.amenities}}</div>
-				<div><b>Contact:</b> {{listing.contact}}</div>
+				<div data-ng-if="user"><b>Contact:</b> {{listing.contact}}</div>
+				<div data-ng-if="!user">Please login to see contact details for this listing</div>
 			</div>
 		</div>
 	</div>
