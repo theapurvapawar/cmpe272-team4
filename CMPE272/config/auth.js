@@ -15,7 +15,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {});
 
 passport.userExist = function(req, res, next) {
-	console.log("userExist");
 	Users.count({
         email: req.body.email
     }, function (err, count) {
@@ -30,8 +29,6 @@ passport.userExist = function(req, res, next) {
 }
 
 passport.saveUser = function(req, res, next) {
-	console.log("saveUser");
-	
 	passport.signup(req.body.email, req.body.password, req.body.name, function(err, user){
 		if(err) throw err;
 		req.login(user, function(err){
@@ -43,7 +40,6 @@ passport.saveUser = function(req, res, next) {
 
 
 passport.signup = function(email, password, name, done){
-	console.log("Inside");
 	hash(password, function(err, salt, hash){
 		if(err) throw err;
 		// if (err) return done(err);
@@ -55,7 +51,6 @@ passport.signup = function(email, password, name, done){
 		}, function(err, user){
 			if(err) throw err;
 			// if (err) return done(err);
-			console.log(user);
 			done(null, user);
 		});
 	});
@@ -70,7 +65,6 @@ passport.use(new LocalStrategy({
 	function(email, password, done){
 
 	Users.findOne({ email : email},function(err,user){
-		console.log(user);
       if(err) { return done(err); }
       if(!user){
           return done(null, false, { message: 'Incorrect username.' });
@@ -95,13 +89,10 @@ passport.use(new FacebookStrategy({
 	},
 	function(accessToken, refreshToken, profile, done) {
 		try {
-			console.log("Inside");
 			FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
 			      if(oldUser){
-			    	  console.log(oldUser + "OLD");
 			          done(null,oldUser);
 			      }else{
-			    	  console.log(oldUser + "NEW");
 			          var newUser = new FbUsers({
 			              fbId : profile.id ,
 		                  fname: profile.displayName,
@@ -115,7 +106,6 @@ passport.use(new FacebookStrategy({
 			          });
 			      }
 			  });
-			console.log("no error");
 		}
 		catch(err) {
 		    console.log("Error:" + err);
@@ -130,13 +120,11 @@ passport.use(new FacebookStrategy({
 //serialize User and deserialize
 //User which basically set the user to req.user and establish a session via a cookie set in the user’s browser
 passport.serializeUser(function(user, done) {
-	console.log("serializeUser");
   done(null, user.id);
 });
 
 
 passport.deserializeUser(function(id, done) {
-	console.log("deserializeUser");
   FbUsers.findById(id,function(err,user){
       if(err) done(err);
       if(user){

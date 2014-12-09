@@ -37,7 +37,6 @@ var passport = require('../config/auth');
 
 
 	router.post("/signup", passport.userExist, function (req, res, next) {
-		//console.log(req.body.email +" " +req.body.password);
 		passport.saveUser(req, res, next);
 	});
 
@@ -51,18 +50,14 @@ var passport = require('../config/auth');
 	
 	router.get('/authenticatedOrNot', function (req, res, next){
 	    if(req.isAuthenticated()){
-	    	console.log("yes");
 	    	 res.redirect("/");
 	        next();
 	    }else{
-	    	console.log("not");
 	        res.redirect("/");
 	    }
 	});
 	
 	router.get('/getUser', function (req, res){
-		console.log('============');
-		console.log(req.user);
 		try {
 			if(req.user== undefined)
 				res.send("nothing");
@@ -74,34 +69,7 @@ var passport = require('../config/auth');
 			res.send(e);
 		}
 		return null;
-	    	//return res.send(req.session.passport.user);
-	
 	});
-	
-	
-	
-	/*
-	var ApartmentsNewTestSchema = new mongoose.Schema(
-			{},
-			{
-				collection: 'test'
-			}
-	);
-	
-	var ApartmentsNewTest = db.model('test', ApartmentsNewTestSchema);
-	
-	router.get('/apartment', function (req, res){
-		return ApartmentsNewTest.find({},function (err, apartmentsList) {
-			if (!err) {
-			
-				return res.send(apartmentsList);
-			} else {
-				
-				return console.log(err);
-			}
-		});
-	});
-	*/
 
 	module.exports = router;
 
