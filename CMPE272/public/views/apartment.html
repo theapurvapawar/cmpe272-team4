@@ -3,13 +3,13 @@
 		<div class="col-xs-12">
 			<ul class="nav nav-tabs pull-right">
 				<li role="presentation" data-ng-class="{active: state == 'info'}">
-					<a data-ng-click="state = 'info'">Info</a>
+					<a class="pointer" data-ng-click="state = 'info'">Info</a>
 				</li>
 				<li role="presentation" data-ng-class="{active: state == 'ws'}">
-					<a data-ng-click="state = 'ws'">Walk Score</a>
+					<a class="pointer" data-ng-click="state = 'ws'">Walk Score</a>
 				</li>
 				<li role="presentation" data-ng-class="{active: state == 'listings'}">
-					<a data-ng-click="state = 'listings'">Listings</a>
+					<a class="pointer" data-ng-click="state = 'listings'">Listings</a>
 				</li>
 			</ul>
 			
@@ -25,22 +25,13 @@
 				</div>
 			</div>
 			
-			<div data-ng-if="state == 'ws'">
-				asdasdasd
-				<h3>{{apartmentadd.walkscore}}</h3>
-				<!-- <div id='ws-walkscore-tile'>
-						<div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>
-							<form id='ws-form'>
-							<a id='ws-a' href='http://www.walkscore.com/' target='_blank'>What's Your Walk Score?</a>
-							<input type='text' id='ws-street' style='position:absolute;top:0px;left:170px;width:386px' />
-							<input type='image' id='ws-go' src='//cdn2.walk.sc/2/images/tile/go-button.gif' height='15' width='22' border='0' alt='get my Walk Score' style='position:absolute;top:0px;right:0px' />
-							</form>
-						</div>
-				</div>-->
+			<div data-ng-if="state == 'ws'" class="text-center innerAll">
+				<span style="font-size: 48px" class="badge">{{apartmentadd.walkscore}}</span><br />
+				Walk Score
 			</div>
 			
 			<div data-ng-if="state == 'listings'">
-				<div class="col-xs-12" data-ng-if="listings">
+				<div class="col-xs-12" data-ng-if="listings.length > 0">
 					<h3>Listings:</h3>
 					<div data-ng-repeat="listing in listings" style="font-size: 14px">
 						<div style="font-size: 24px;float: right;">
@@ -53,6 +44,11 @@
 						<div data-ng-if="!user">Please login to see contact details for this listing</div>
 					</div>
 				</div>
+				
+				<div data-ng-if="listings.length == 0" class="text-center innerAll">
+					<h2>No listings available. Go to info tab to post one.</h2>
+				</div>
+				
 			</div>
 			
 		</div>

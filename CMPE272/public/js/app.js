@@ -30,7 +30,7 @@ cmpe.config(function($stateProvider, $urlRouterProvider){
 			controller : 'searchCtrl'
 		})
 		.state('root.base.apartment', {
-			url: 'apartment/:placeID',
+			url: 'apartment/:placeID/:uniLat/:uniLong',
 			templateUrl : 'views/apartment.html',
 			controller : 'apartmentCtrl'
 		});

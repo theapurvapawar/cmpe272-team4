@@ -5,9 +5,14 @@
 			<div data-ng-repeat="apartment in apartments"
 				class="col-xs-12 apt-list-item pointer"
 				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng, 16)"
-				data-ui-sref="root.base.apartment({placeID : apartment.place_id})" style="font-size: 20px">
+				data-ui-sref="root.base.apartment({placeID : apartment.place_id, uniLat : uniLat, uniLong: uniLong})" style="font-size: 20px">
 				<h5>{{apartment.name}}</h5>
 				<div>{{apartment.formatted_address}}</div>
+			</div>
+			<div class="text-center innerAll">
+				<button class="btn btn-default" data-ng-click="loadMore()" data-ng-if="pageToken">
+					Load more
+				</button>
 			</div>
 		</div>
 		

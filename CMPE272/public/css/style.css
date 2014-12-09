@@ -40,6 +40,10 @@ a:hover{
 	display: none;
 }
 
+.innerAll{
+	padding: 20px;
+}
+
 @media ( max-width : 767px) {
 	.map-floater{
 		z-index: 1029;

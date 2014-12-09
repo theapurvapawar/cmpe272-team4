@@ -108,7 +108,7 @@ passport.use(new FacebookStrategy({
 		                  email: profile.emails[0].value,
 		                  provider: 'facebook',
 		                  facebook: profile._json,
-		                  fb_picture: "https://graph.facebook.com/" + profile.username + "/picture" + "?width=200&height=200" + "&access_token=" + accessToken
+		                  fb_picture: "https://graph.facebook.com/" + profile.id + "/picture" + "?width=200&height=200" + "&access_token=" + accessToken
 			          }).save(function(err,newUser){
 			              if(err) throw err;
 			              done(null, newUser);
