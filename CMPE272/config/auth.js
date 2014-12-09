@@ -22,8 +22,9 @@ passport.userExist = function(req, res, next) {
         if (count === 0) {
             next();
         } else {
-            res.redirect("/signup");
-            //res.status(200).end();
+        	
+            //res.redirect("/");
+            res.status(200).end();
         }
     });
 }
@@ -31,23 +32,24 @@ passport.userExist = function(req, res, next) {
 passport.saveUser = function(req, res, next) {
 	console.log("saveUser");
 	
-	passport.signup(req.body.email, req.body.password, function(err, user){
+	passport.signup(req.body.email, req.body.password, req.body.name, function(err, user){
 		if(err) throw err;
 		req.login(user, function(err){
 			if(err) return next(err);
-			return res.send({"Status":"OK"})
+			return res.send({user:req.user});
 		});
 	});
 }
 
 
-passport.signup = function(email, password, done){
+passport.signup = function(email, password, name, done){
 	console.log("Inside");
 	hash(password, function(err, salt, hash){
 		if(err) throw err;
 		// if (err) return done(err);
 		Users.create({
 			email : email,
+			fname : name,
 			salt : salt,
 			hash : hash
 		}, function(err, user){
@@ -150,6 +152,7 @@ passport.deserializeUser(function(id, done) {
 /*-----Required for passport- Users Table------*/
 var LocalUserSchema = new mongoose.Schema({
 	email: { type : String , lowercase : true},
+	fname: String,
 	salt: String,
 	hash: String
 	});

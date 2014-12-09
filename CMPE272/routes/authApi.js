@@ -22,8 +22,7 @@ var passport = require('../config/auth');
 	
 	router.post("/auth/local" 
 			,passport.authenticate('local',{
-				successRedirect : "/",
-				failureRedirect : "/login",
+				
 			})
 		);
 
