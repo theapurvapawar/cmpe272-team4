@@ -1,6 +1,6 @@
 <div class="modal-body">
 	<div style="font-size: 100px;text-align: center"><i class="fa fa-user"></i></div>
-	<form data-ng-submit="doLogin()" name="loginForm">
+	<form name="loginForm">
 		<input class="form-control" data-ng-model="user.username" type="email" placeholder="Email"  required="required"/>
 		<div class="separator"></div>
 		<input type="password" class="form-control" data-ng-model="user.password" placeholder="Password" required="required"/>
@@ -21,9 +21,6 @@
 			<div class="text-center">
 				<button class="btn btn-primary" data-ng-click="login()"><i class="fa fa-facebook"></i> Sign in with Facebook</button>
 			</div>
-			<!-- <div>
-				<a>Register?</a>
-			</div> -->
 		</div>
 	</div>
 </div>

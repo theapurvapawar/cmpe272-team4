@@ -21,7 +21,7 @@ a:hover{
 }
 
 .apt-list-item:hover{
-	background: lightgrey;
+	background: rgba(211, 211, 211, 0.8);
 }
 
 
@@ -34,6 +34,10 @@ a:hover{
 .map-floater{
 	z-index: 1029;
 	margin-top: 500px;
+}
+
+.ws-form{
+	display: none;
 }
 
 @media ( max-width : 767px) {

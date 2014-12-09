@@ -1,9 +1,9 @@
 <div class="container">
-	<div class="row" style="background: rgba(255, 255, 255, 0.8);">
+	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5); margin-bottom: 20px;">
 		<div class="col-xs-12">
 			<h4 data-ng-if="apartments">Apartments near {{label}}:</h4>
 			<div data-ng-repeat="apartment in apartments"
-				class="col-xs-12 apt-list-item"
+				class="col-xs-12 apt-list-item pointer"
 				data-ng-click="panTo(apartment.geometry.location.lat, apartment.geometry.location.lng, 16)"
 				data-ui-sref="root.base.apartment({placeID : apartment.place_id})" style="font-size: 20px">
 				<h5>{{apartment.name}}</h5>

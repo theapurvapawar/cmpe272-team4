@@ -84,7 +84,7 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
     };
 	
 	$rootScope.panTo = function(lat, lng, zoom, mapid){
-		$rootScope.map.center.latitude = lat;
+		$rootScope.map.center.latitude = lat-0.01;
 		$rootScope.map.center.longitude = lng;
 		$rootScope.map.zoom = zoom;
 		//$rootScope.position.show();

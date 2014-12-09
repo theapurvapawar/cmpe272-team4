@@ -1,36 +1,58 @@
 <div class="container">
 	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5); margin-bottom: 20px;">
 		<div class="col-xs-12">
+			<ul class="nav nav-tabs pull-right">
+				<li role="presentation" data-ng-class="{active: state == 'info'}">
+					<a data-ng-click="state = 'info'">Info</a>
+				</li>
+				<li role="presentation" data-ng-class="{active: state == 'ws'}">
+					<a data-ng-click="state = 'ws'">Walk Score</a>
+				</li>
+				<li role="presentation" data-ng-class="{active: state == 'listings'}">
+					<a data-ng-click="state = 'listings'">Listings</a>
+				</li>
+			</ul>
+			
 			<h3>{{apartment.name}}</h3>
-			<div style="font-size: 22px">
-				<p><b>Address:</b> {{apartment.formatted_address}}</p>
-				<p><b>Phone #:</b> {{apartment.formatted_phone_number}}</p>
-				<p>Office Open now? <span data-ng-if="apartment.opening_hours.open_now" class="text-success">Yes</span><span class="text-danger" data-ng-if="!apartment.opening_hours.open_now">No</span></p>
-				<p><a class="pointer" data-ng-click="postListing()" data-ng-if="user">Post a listing to this apartment</a></p>
-				<p><a target="_blank" data-ng-href="{{apartment.url}}">Social</a> | <a target="_blank" data-ng-href="{{apartment.website}}">Website</a></p>
-			</div>
-		</div>
-		<div id='ws-walkscore-tile'>
-				<div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>
-					<!-- <form id='ws-form'>
-					<a id='ws-a' href='http://www.walkscore.com/' target='_blank'>What's Your Walk Score?</a>
-					<input type='text' id='ws-street' style='position:absolute;top:0px;left:170px;width:386px' />
-					<input type='image' id='ws-go' src='//cdn2.walk.sc/2/images/tile/go-button.gif' height='15' width='22' border='0' alt='get my Walk Score' style='position:absolute;top:0px;right:0px' />
-					</form>-->
+			
+			<div data-ng-if="state == 'info'">
+				<div style="font-size: 22px">
+					<p><b>Address:</b> {{apartment.formatted_address}}</p>
+					<p><b>Phone #:</b> {{apartment.formatted_phone_number}}</p>
+					<p>Office Open now? <span data-ng-if="apartment.opening_hours.open_now" class="text-success">Yes</span><span class="text-danger" data-ng-if="!apartment.opening_hours.open_now">No</span></p>
+					<p><button class="btn btn-default" data-ng-click="postListing()" data-ng-if="user"><i class="fa fa-plus"></i> Apartment Listing</button></p>
+					<p><a target="_blank" data-ng-href="{{apartment.url}}">Social</a> | <a target="_blank" data-ng-href="{{apartment.website}}">Website</a></p>
 				</div>
-		</div>
-		<div class="col-xs-12" data-ng-if="listings">
-			<h3>Listings:</h3>
-			<div data-ng-repeat="listing in listings" style="font-size: 14px">
-				<div style="font-size: 24px;float: right;">
-					<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
-				</div>
-				<h4 style="margin: 0;">{{listing.desc}}</h4>
-				<div><b>Bedrooms:</b> {{listing.noOfBedrooms}} | <b>Bathrooms:</b> {{listing.noOfBathrooms}} | <b>Rent:</b> {{listing.rent}}</div>
-				<div><b>Amenities:</b> {{listing.amenities}}</div>
-				<div data-ng-if="user"><b>Contact:</b> {{listing.contact}}</div>
-				<div data-ng-if="!user">Please login to see contact details for this listing</div>
 			</div>
+			
+			<div data-ng-if="ws">
+				<!-- <div id='ws-walkscore-tile'>
+						<div id='ws-footer' style='position:absolute;top:426px;left:8px;width:588px'>
+							<form id='ws-form'>
+							<a id='ws-a' href='http://www.walkscore.com/' target='_blank'>What's Your Walk Score?</a>
+							<input type='text' id='ws-street' style='position:absolute;top:0px;left:170px;width:386px' />
+							<input type='image' id='ws-go' src='//cdn2.walk.sc/2/images/tile/go-button.gif' height='15' width='22' border='0' alt='get my Walk Score' style='position:absolute;top:0px;right:0px' />
+							</form>
+						</div>
+				</div>-->
+			</div>
+			
+			<div data-ng-if="state == 'listings'">
+				<div class="col-xs-12" data-ng-if="listings">
+					<h3>Listings:</h3>
+					<div data-ng-repeat="listing in listings" style="font-size: 14px">
+						<div style="font-size: 24px;float: right;">
+							<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
+						</div>
+						<h4 style="margin: 0;">{{listing.desc}}</h4>
+						<div><b>Bedrooms:</b> {{listing.noOfBedrooms}} | <b>Bathrooms:</b> {{listing.noOfBathrooms}} | <b>Rent:</b> {{listing.rent}}</div>
+						<div><b>Amenities:</b> {{listing.amenities}}</div>
+						<div data-ng-if="user"><b>Contact:</b> {{listing.contact}}</div>
+						<div data-ng-if="!user">Please login to see contact details for this listing</div>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 </div>

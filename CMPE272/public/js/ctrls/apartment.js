@@ -52,12 +52,14 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal){
 	
 	$scope.deleteListing = function(listing){
 		$http({
-            method: "delete",
-            url: "api/listings/"+listing._id
+            method: "post",
+            url: "api/listings/delete/"+listing._id
         }).success(function(data){
         	$scope.getListing();
         });
 	};
+	
+	$scope.state = 'info';
 	
 });
 
@@ -80,7 +82,8 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 			desc : $scope.newApt.desc,
 			contact : $scope.newApt.contact
 		}).success(function(data){
-			console.log(data);
+			
+			$modalInstance.close();
 		});
 	};
 	
