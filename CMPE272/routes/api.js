@@ -18,7 +18,7 @@ router.get('/', function (req, res) {
 });
 
 
-mongoose.connect('ec2user@ec2-54-67-9-17.us-west-1.compute.amazonaws.com:27017/cmpe272');
+mongoose.connect('ec2user@ec2-54-183-68-182.us-west-1.compute.amazonaws.com:27017/cmpe272');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -201,10 +201,10 @@ router.post('/listings', function(req, res){
 	}
 });
 
-router.post('/listings/:id', function(req, res){
-	Listings.remove({"_id":req.param.id}, function(err, response, body){
+router.post('/listings/delete/:id', function(req, res){    
+	Listings.remove({_id:req.param.id}, function(err, response, body){
 		if(!err){
-			return response.status(200).end();
+			return res.status(200).end();
 		} else {
 			return console.log(err);
 		}
