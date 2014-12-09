@@ -6,7 +6,20 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal){
 		$scope.apartment = data.result;
 		$scope.getListing();
 		$scope.getWalkScore(data.result.formatted_address);
+		
+		var addressurl = 'http://api.walkscore.com/score?format=json&address=Sunset%20District%20San%20Francisco%20CA&lat=37.75&lon=-122.49&wsapikey=9a9b91a7d801a2285cfe0bc5394459ed'
+	
+			$http.post('/api/forwardRequest', { url : addressurl}).success(function(data){
+				$scope.apartmentadd = data;
+				console.log(data);
+				
+			});
 	});
+	
+	
+	
+
+
 	
 	$scope.getWalkScore = function(address){
 		var ws_wsid = 'f7837f8b91f64744a26ad5be3dcf697b';
