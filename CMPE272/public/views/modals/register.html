@@ -1,17 +1,19 @@
 <div class="modal-body">
 	<div style="font-size: 100px;text-align: center"><i class="fa fa-user"></i></div>
-	<input class="form-control" data-ng-model="user.name" type="text" placeholder="Name" />
-	<div class="separator"></div>
-	<input class="form-control" data-ng-model="user.username" type="text" placeholder="Email" />
-	<div class="separator"></div>
-	<input type="text" class="form-control" data-ng-model="user.password" placeholder="Password" />
-	<div class="separator"></div>
-	<div class="text-center">
-		<button class="btn btn-primary" data-ng-click="doLogin()">
-			<span data-ng-if="!logging">Register</span>
-			<span data-ng-if="logging"><i class="fa fa-spinner fa-spin"></i> Registering...</span>
-		</button>
-	</div>
+	<form data-ng-submit="doLogin()" name="regForm">
+		<input class="form-control" data-ng-model="user.name" type="text" placeholder="Name" required />
+		<div class="separator"></div>
+		<input class="form-control" data-ng-model="user.username" type="email" placeholder="Email" required />
+		<div class="separator"></div>
+		<input type="password" class="form-control" data-ng-model="user.password" placeholder="Password" required />
+		<div class="separator"></div>
+		<div class="text-center">
+			<button class="btn btn-primary" data-ng-click="doLogin()" data-ng-disabled="!regForm.$valid">
+				<span data-ng-if="!logging">Register</span>
+				<span data-ng-if="logging"><i class="fa fa-spinner fa-spin"></i> Registering...</span>
+			</button>
+		</div>
+	</form>
 	<div class="text-center">
 	or
 	</div>
