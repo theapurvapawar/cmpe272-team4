@@ -5,7 +5,25 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal){
 	$http.post('/api/forwardRequest', { url : url}).success(function(data){
 		$scope.apartment = data.result;
 		$scope.getListing();
+		$scope.getWalkScore(data.result.formatted_address);
 	});
+	
+	$scope.getWalkScore = function(address){
+		var ws_wsid = 'f7837f8b91f64744a26ad5be3dcf697b';
+		var ws_address = address;
+		//document.getElementById("demo").innerHTML = ws_address;//'1060 Lombard Street, San Francisco, CA';
+		var ws_width = '600';
+		var ws_height = '444';
+		var ws_layout = 'horizontal';
+		var ws_commute = 'true';
+		var ws_transit_score = 'true';
+		var ws_map_modules = 'all';
+		
+		$.getScript('http://www.walkscore.com/tile/show-walkscore-tile.php',function(){
+			
+			console.log("Script loaded");
+		});
+	}
 
 	$scope.postListing = function(){
 		var modalInstance = $modal.open({

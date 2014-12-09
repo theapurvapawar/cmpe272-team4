@@ -24,7 +24,7 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 				if(dist<1)
 				var image='/assets/images/green.png';
 				if(dist>1 && dist<1.5)
-				var image='/assets/images/yellow1.png';
+				var image='/assets/images/orange.png';
 				if(dist>1.5)
 				var image='/assets/images/red.png'
 				
@@ -36,7 +36,7 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 			        icon: image
 				});
 				
-				var univ_icon="http://www.labtechsoftware.com/images/icon-university-64.png";
+				var univ_icon="/assets/images/univicon.png";
 				$rootScope.univmarkers.push({
 					id: pad+i,
 					latitude: lat,
