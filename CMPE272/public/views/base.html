@@ -8,9 +8,9 @@
 		data-scale-height>
 	<div ng-repeat="mark in markers track by $index" position="{{mark.id}}" style="'white-space:nowrap'">
 	    <ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="'onClick'" events="'markersEvents'">
-	    	<ui-gmap-windows show="'show'">
+	    	<!--<ui-gmap-windows show="'show'">
 	    		{{this.apartments[$index].name}}
-        	</ui-gmap-windows>
+        	</ui-gmap-windows>-->
         	<ui-gmap-polylines models="trackings" path="'geotracks'" static="true"></ui-gmap-polylines>
 	    </ui-gmap-markers>
 	 </div> 
