@@ -1,5 +1,10 @@
-cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal){
+cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal, $filter){
 
+
+	$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
+	$scope.bathroomOpts = [{number: "1"}, {number: "2"}, {number: "3"}, {number: "4"}, {number: "5"}];
+
+	
 	var url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+$stateParams.placeID+'&key=AIzaSyAUwMUP0T2KT_aZaJK5ukT6VZoX6rOpUgo'
 
 	$http.post('/api/forwardRequest', { url : url}).success(function(data){
@@ -38,7 +43,29 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal){
 			//$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
+	
+	/*
+	cmpe.filter('filterCheck', function () {
+		console.log("Inside filterCheck");
+		  return function (items, bedrooms, bathrooms) {
+		    var filtered = [];
+		    if(bedrooms==="" || isNaN(bedrooms)){
+		    	bedrooms=0;
+		    }
+		    if(bathrooms==="" || isNaN(bathrooms)){
+		    	bathrooms=0;
+		    }
 
+		    for (var i = 0; i < items.length; i++) {
+		      var item = items[i];
+		      if (item.noOfBedrooms>bedrooms && item.noOfBathrooms>bathrooms) {
+		        filtered.push(item);
+		      }
+		    }
+		    return filtered;
+		  };
+		});
+	*/
 	$scope.getListing = function(){
 		$http.get('/api/listings/'+$scope.apartment.place_id).success(function(data){
 			$scope.listings = data;

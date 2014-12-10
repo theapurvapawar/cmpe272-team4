@@ -33,7 +33,14 @@
 			<div data-ng-if="state == 'listings'">
 				<div class="col-xs-12" data-ng-if="listings.length > 0">
 					<h3>Listings:</h3>
-					<div data-ng-repeat="listing in listings" style="font-size: 14px">
+					<div class="separator"></div>
+					<label>Number of bedrooms:</label>
+					<select class="form-control" data-ng-model="filters.noOfBedrooms" data-ng-options="bedroom.number for bedroom in bedroomOpts"></select>
+					<div class="separator"></div>
+					<label>Number of bathrooms:</label>
+					<select class="form-control" data-ng-model="myfilters.noOfBathrooms" data-ng-options="bathroom.number for bathroom in bathroomOpts"></select>
+				Input: <input ng-model="fil.noOfBathrooms" type="text"><br>
+					<div data-ng-repeat="listing in listings  | filter:fil" style="font-size: 14px">
 						<div style="font-size: 24px;float: right;">
 							<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
 						</div>
