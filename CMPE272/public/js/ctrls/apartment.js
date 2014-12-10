@@ -1,9 +1,10 @@
 cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal, $filter){
 
 
-	$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
-	$scope.bathroomOpts = [{number: "1"}, {number: "2"}, {number: "3"}, {number: "4"}, {number: "5"}];
-
+	//$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
+	//$scope.bathroomOpts = [{number: "1"}, {number: "2"}, {number: "3"}, {number: "4"}, {number: "5"}];
+	$scope.bedroomOpts = [1, 2, 3, 4, 5];
+	$scope.bathroomOpts = [1, 2, 3, 4, 5];
 	
 	var url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='+$stateParams.placeID+'&key=AIzaSyAUwMUP0T2KT_aZaJK5ukT6VZoX6rOpUgo'
 

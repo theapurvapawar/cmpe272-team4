@@ -1,5 +1,5 @@
 <div class="container">
-	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5); margin-bottom: 20px;">
+	<div class="row" style="background: rgba(255, 255, 255, 0.8); box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5); margin-bottom: 50px;">
 		<div class="col-xs-12">
 			<ul class="nav nav-tabs pull-right">
 				<li role="presentation" data-ng-class="{active: state == 'info'}">
@@ -32,15 +32,16 @@
 			
 			<div data-ng-if="state == 'listings'">
 				<div class="col-xs-12" data-ng-if="listings.length > 0">
+					<div class="pull-right">
+						<label>Number of bedrooms:</label>
+						<select style="width: 20px; display: inline;padding-right: 0;" class="form-control" data-ng-model="filters.noOfBedrooms" data-ng-options="bedroom for bedroom in bedroomOpts"></select>
+						<label>Number of bathrooms:</label>
+						<select style="width: 20px; display: inline;padding-right: 0;" class="form-control" data-ng-model="filters.noOfBathrooms" data-ng-options="bathroom for bathroom in bathroomOpts"></select>
+						<a data-ng-click="filters = null" class="pointer">Reset</a>
+					</div>
 					<h3>Listings:</h3>
 					<div class="separator"></div>
-					<label>Number of bedrooms:</label>
-					<select class="form-control" data-ng-model="filters.noOfBedrooms" data-ng-options="bedroom.number for bedroom in bedroomOpts"></select>
-					<div class="separator"></div>
-					<label>Number of bathrooms:</label>
-					<select class="form-control" data-ng-model="myfilters.noOfBathrooms" data-ng-options="bathroom.number for bathroom in bathroomOpts"></select>
-				Input: <input ng-model="fil.noOfBathrooms" type="text"><br>
-					<div data-ng-repeat="listing in listings  | filter:fil" style="font-size: 14px">
+					<div data-ng-repeat="listing in listings  | filter: filters" style="font-size: 14px">
 						<div style="font-size: 24px;float: right;">
 							<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
 						</div>
@@ -58,6 +59,10 @@
 				
 			</div>
 			
+		</div>
+		<div class="col-xs-12">
+			<div class="separator"></div>
+			<div class="separator"></div>
 		</div>
 	</div>
 </div>
