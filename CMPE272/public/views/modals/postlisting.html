@@ -29,10 +29,10 @@
 						</accordion-heading>
 						<form>
 							<div class="pull-right text-success" style="font-size: 28px">
-								<span class="text-default" data-ng-if="stickyDays">You pay:</span> 
-								<span data-ng-if="stickyDays.number == 1">$1</span>
-								<span data-ng-if="stickyDays.number == 3">$2</span>
-								<span data-ng-if="stickyDays.number == 7">$4</span>
+								<span class="text-default" data-ng-if="stickyDays.number.number">You pay:</span> 
+								<span data-ng-if="stickyDays.number.number == 1">$1</span>
+								<span data-ng-if="stickyDays.number.number == 3">$2</span>
+								<span data-ng-if="stickyDays.number.number == 7">$4</span>
 							</div>
 							<select class="form-control" style="width: 50%;" 
 								data-ng-model="stickyDays.number" data-ng-options="sticky.number for sticky in stickyOpts">

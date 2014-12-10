@@ -158,7 +158,7 @@ var ListingsSchema = new mongoose.Schema(
 			contact: String,
 			placeId: String,
 			userId: String,
-			stickyUntil: Date,
+			stickyUntil: Number,
 			created: Date
 		},
 		{

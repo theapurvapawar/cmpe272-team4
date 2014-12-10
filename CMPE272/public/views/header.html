@@ -3,30 +3,30 @@
 	<div class="container" style="padding-top: 8px">
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="col-xs-1">
-					<a class="pointer" data-ui-sref="root.base" data-ng-click="resetMarkers()"><img src="images/logo.png" style="width: 55%;"></a>
+				<div class="col-xs-2">
+					<a class="pointer" data-ui-sref="root.base" data-ng-click="resetMarkers()"><img src="images/logo.png" style="width: 40px;"></a>
 				</div>
-				<div class="col-xs-7" style="padding: 0;">
+				<div class="col-xs-8" style="padding: 0;">
 					<input type="text" data-ng-model="asyncSelected" style="color: white;"
 						placeholder="Search for your university..."
 						data-typeahead="address as address.name for address in getLocation($viewValue)"
 						data-typeahead-loading="loadingLocations" class="form-control"
 						data-typeahead-on-select='onSelect($item, $model, $label)'>
 				</div>
-				<div class="col-xs-4 text-right" style="padding: 0;padding-top: 7px;font-size: 14px">
+				<div class="col-xs-2 text-right" style="padding: 0;padding-top: 7px;font-size: 14px">
 					<div data-ng-if="!user">
 						<a  data-ng-click="launchAuth()" class="pointer" style="color: white;">
-							<i class="fa fa-user"></i> Login
+							<i class="fa fa-user"></i> <span class="mobile-hidden">Login</span>
 						</a> | 
 						<a class="pointer" style="color: white;" data-ng-click="launchReg()">
-							<i class="fa fa-plus"></i> Register
+							<i class="fa fa-plus"></i> <span class="mobile-hidden">Register</span>
 						</a>
 					</div>
 					<span data-ng-if="user">
 						<span class="dropdown" data-dropdown>
 							<a class="dropdown-toggle pointer" style="color: white;" data-dropdown-toggle>
 								<img data-ng-src="{{user.fb_picture}}" src="images/default-user-icon.png" style="width: 32px; height: 32px;margin-top: -6px;"> 
-								{{user.fname}} <i class="fa fa-caret-down"></i>
+								<span class="mobile-hidden">{{user.fname}} <i class="fa fa-caret-down"></i></span>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-right" style="margin-top: 12px;">
 								<li><a class="pointer" data-ng-click="logout()">Logout</a></li>

@@ -106,7 +106,7 @@ cmpe.controller('regCtrl', function($scope, $http, $modalInstance, $window){
 			if(data.error)
 				alert(data.error);
 			else
-				$modalInstance.close(data);
+				$modalInstance.close(data.user);
 		});
 	};
 

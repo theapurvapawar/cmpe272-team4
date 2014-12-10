@@ -49,4 +49,8 @@ a:hover{
 		z-index: 1029;
 		margin-top: 250px;
 	}
+	
+	.mobile-hidden{
+		display: none;
+	}
 }

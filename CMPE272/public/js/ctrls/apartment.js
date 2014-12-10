@@ -70,7 +70,19 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$r
 	
 	$scope.getListing = function(){
 		$http.get('/api/listings/'+$scope.apartment.place_id).success(function(data){
-			$scope.listings = data;
+			$scope.listings = [];
+			$scope.stickyListings = [];
+			angular.forEach(data, function(v, i){
+				if(v.stickyUntil > new Date().getTime()){
+					$scope.stickyListings.push(v);
+					console.log('sticky');
+				}
+				else{
+					$scope.listings.push(v);
+					console.log('not sticky');
+				}
+			});
+			$scope.allListings = data;
 		});
 	};
 
@@ -98,6 +110,10 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 
 	};
 	
+	$scope.stickyDays = {
+			number : null
+	};
+	
 	$scope.makeSticky = function(){
 		$scope.stickySelected = $scope.stickyDays;
 		console.log($scope.stickyDays);
@@ -114,7 +130,7 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 			amenities : $scope.newApt.amenities,
 			desc : $scope.newApt.desc,
 			contact : $scope.newApt.contact,
-			stickyUntil : $scope.stickySelected ? new Date().getTime() + $scope.stickySelected * ms : new Date().getTime()
+			stickyUntil : $scope.stickySelected ? new Date().getTime() + $scope.stickySelected.number.number * ms : new Date().getTime()
 		}).success(function(data){
 			$modalInstance.close();
 		});
