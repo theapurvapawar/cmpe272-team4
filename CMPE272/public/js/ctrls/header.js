@@ -76,7 +76,10 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance, $window){
 	$scope.logging = false;
 	$scope.doLogin = function(){
 		$http.post('/authApi/auth/local', {email: $scope.user.username, password : $scope.user.password}).success(function(data){
-			$modalInstance.close(data.user);
+			if(data.user)
+				$modalInstance.close(data.user);
+			else
+				$scope.status = data.error;
 		});
 	};
 
