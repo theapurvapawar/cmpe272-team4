@@ -158,7 +158,8 @@ var ListingsSchema = new mongoose.Schema(
 			contact: String,
 			placeId: String,
 			userId: String,
-			stickyUntil: Date
+			stickyUntil: Date,
+			created: Date
 		},
 		{
 			collection: 'listings'
@@ -188,7 +189,8 @@ router.post('/listings', function(req, res){
 			contact: req.body.contact,
 			placeId: req.body.placeId,
 			userId: req.user._id,
-			stickyUntil: req.body.stickyUntil
+			stickyUntil: req.body.stickyUntil,
+			created: req.body.created
 		});
 		listing.save(function(err, response, body){
 			if(!err){
