@@ -33,6 +33,10 @@ cmpe.config(function($stateProvider, $urlRouterProvider){
 			url: 'apartment/:placeID/:uniLat/:uniLong',
 			templateUrl : 'views/apartment.html',
 			controller : 'apartmentCtrl'
+		})
+		.state('root.base.team', {
+			url: 'aboutus',
+			templateUrl : 'views/team.html'
 		});
 	
 });
