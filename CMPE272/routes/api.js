@@ -157,7 +157,8 @@ var ListingsSchema = new mongoose.Schema(
 			desc: String,
 			contact: String,
 			placeId: String,
-			userId: String
+			userId: String,
+			stickyUntil: Date
 		},
 		{
 			collection: 'listings'
@@ -186,7 +187,8 @@ router.post('/listings', function(req, res){
 			desc: req.body.desc,
 			contact: req.body.contact,
 			placeId: req.body.placeId,
-			userId: req.user._id
+			userId: req.user._id,
+			stickyUntil: req.body.stickyUntil
 		});
 		listing.save(function(err, response, body){
 			if(!err){
@@ -202,13 +204,17 @@ router.post('/listings', function(req, res){
 });
 
 router.post('/listings/delete/:id', function(req, res){    
-	Listings.remove({_id: req.params.id}, function(err, response, body){
-		if(!err){
-			return res.status(200).end();
-		} else {
-			return console.log(err);
-		}
-	});
+	if(req.user){
+		Listings.remove({_id: req.params.id}, function(err, response, body){
+			if(!err){
+				return res.status(200).end();
+			} else {
+				return console.log(err);
+			}
+		});
+	}else {
+		res.status(403).end();
+	}
 });
 
 
