@@ -42,7 +42,7 @@
 					<h3>Listings:</h3>
 					<div class="separator"></div>
 					<div data-ng-repeat="listing in listings  | filter: filters" style="font-size: 14px">
-						<div style="font-size: 24px;float: right;">
+						<div style="font-size: 24px;position: absolute;right: 0;">
 							<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
 						</div>
 						<h4 style="margin: 0;">{{listing.desc}}</h4>

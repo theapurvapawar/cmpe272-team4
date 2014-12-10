@@ -1,8 +1,5 @@
 cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$rootScope, $filter){
 
-
-	//$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
-	//$scope.bathroomOpts = [{number: "1"}, {number: "2"}, {number: "3"}, {number: "4"}, {number: "5"}];
 	$scope.bedroomOpts = [1, 2, 3, 4, 5];
 	$scope.bathroomOpts = [1, 2, 3, 4, 5];
 	
@@ -65,33 +62,12 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$r
 
 		modalInstance.result.then(function (selectedItem) {
 			$scope.getListing();
+			$scope.state = 'listings';
 		}, function () {
 			//$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
 	
-	/*
-	cmpe.filter('filterCheck', function () {
-		console.log("Inside filterCheck");
-		  return function (items, bedrooms, bathrooms) {
-		    var filtered = [];
-		    if(bedrooms==="" || isNaN(bedrooms)){
-		    	bedrooms=0;
-		    }
-		    if(bathrooms==="" || isNaN(bathrooms)){
-		    	bathrooms=0;
-		    }
-
-		    for (var i = 0; i < items.length; i++) {
-		      var item = items[i];
-		      if (item.noOfBedrooms>bedrooms && item.noOfBathrooms>bathrooms) {
-		        filtered.push(item);
-		      }
-		    }
-		    return filtered;
-		  };
-		});
-	*/
 	$scope.getListing = function(){
 		$http.get('/api/listings/'+$scope.apartment.place_id).success(function(data){
 			$scope.listings = data;
@@ -115,10 +91,19 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 
 	$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
 	$scope.bathroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
+	
+	$scope.stickyOpts = [{number: 1}, {number: 3}, {number: 7}];
 
 	$scope.newApt = {
 
 	};
+	
+	$scope.makeSticky = function(){
+		$scope.stickySelected = $scope.stickyDays;
+		console.log($scope.stickyDays);
+	};
+	
+	var ms = 24 * 60 * 60 * 1000;
 
 	$scope.post = function(){
 		$http.post('/api/listings', {
@@ -128,9 +113,9 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 			rent : $scope.newApt.rent,
 			amenities : $scope.newApt.amenities,
 			desc : $scope.newApt.desc,
-			contact : $scope.newApt.contact
+			contact : $scope.newApt.contact,
+			stickyUntil : $scope.stickySelected ? new Date().getTime() + $scope.stickySelected * ms : new Date().getTime()
 		}).success(function(data){
-
 			$modalInstance.close();
 		});
 	};

@@ -22,21 +22,20 @@
 				<label>How to contact you?</label>
 				<textarea class="form-control" style="resize: none;" data-ng-model="newApt.contact"></textarea>
 				<div class="separator"></div>
-				<accordion close-others="oneAtATime">
+				<accordion close-others="oneAtATime" data-ng-if="!stickySelected">
 					<accordion-group is-open="status.open">
 						<accordion-heading>
 							You can pay to make your listing sticky. Click here. <i class="pull-right fa" data-ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
 						</accordion-heading>
 						<form>
 							<div class="pull-right text-success" style="font-size: 28px">
-								<span data-ng-if="stickyDays == 1">$1</span>
-								<span data-ng-if="stickyDays == 3">$2</span>
-								<span data-ng-if="stickyDays == 7">$5</span>
+								<span class="text-default" data-ng-if="stickyDays">You pay:</span> 
+								<span data-ng-if="stickyDays.number == 1">$1</span>
+								<span data-ng-if="stickyDays.number == 3">$2</span>
+								<span data-ng-if="stickyDays.number == 7">$4</span>
 							</div>
-							<select class="form-control" style="width: 50%;" data-ng-model="stickyDays">
-								<option value="1" selected="selected">1 day</option>
-								<option value="3">3 days</option>
-								<option value="7">1 Week</option>
+							<select class="form-control" style="width: 50%;" 
+								data-ng-model="stickyDays.number" data-ng-options="sticky.number for sticky in stickyOpts">
 							</select>
 							<div class="separator"></div>
 							<label>Card number:</label>
@@ -50,6 +49,9 @@
 						</form>
 					</accordion-group>
 				</accordion>
+				<div data-ng-if="stickySelected">
+					<i class="fa fa-check text-success"></i> This listing is now sticky.
+				</div>
 				<div class="pull-right">
 					<button data-ng-click="cancel()" class="btn btn-danger">
 						Cancel

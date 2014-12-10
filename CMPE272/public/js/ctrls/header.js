@@ -59,6 +59,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope
 	
 	$scope.logout = function(){
 		$http.get('/authApi/logout').success(function(data){
+			$rootScope.user = null;
 			$scope.user = null;
 		});
 	};
