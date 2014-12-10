@@ -183,3 +183,9 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 	};
 
 });
+
+cmpe.filter('reverse', function() {
+	return function(items) {
+		return items.slice().reverse();
+	};
+});
