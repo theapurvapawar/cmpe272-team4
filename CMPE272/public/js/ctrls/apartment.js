@@ -1,4 +1,4 @@
-cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal, $filter){
+cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$rootScope, $filter){
 
 
 	//$scope.bedroomOpts = [{number: 1}, {number: 2}, {number: 3}, {number: 4}, {number: 5}];
@@ -23,6 +23,31 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal, $
 		
 		$http.post('/api/forwardRequest', { url : addressurl}).success(function(data){
 			$scope.apartmentadd = data;
+		});
+		
+
+		var lat1 = $scope.apartment.geometry.location.lat - 0.002;
+		var lng1 = $scope.apartment.geometry.location.lng - 0.002;
+		var lat2 = $scope.apartment.geometry.location.lat + 0.002;
+		var lng2 = $scope.apartment.geometry.location.lng + 0.002;
+		
+		var transitUrl = '/api/stops/geoRange?long1='+lng1+'&long2='+lng2+'&lat1='+lat1+'&lat2='+lat2;
+		$http.get(transitUrl).success(function(data){
+			$rootScope.transitmarker=[];
+			var pad=$rootScope.markers.length+1;
+			var transimage='http://inclusivemobility.net/assets/leaflet-maps-marker-icons/busstop.png'
+			angular.forEach(data, function(v, i){
+				//console.log(v);
+			
+				
+			$rootScope.transitmarker.push({
+				id : pad+i,	
+				latitude: v.LAT,
+		        longitude: v.LONG_,
+		        title: name,
+		        icon: transimage
+			});
+			});
 		});
 	});
 
