@@ -5,6 +5,10 @@ CMPE 272 Team 4 Project
 - Project: Uniblocks (Apartment Rental Service for students)
 - Under: Prof. Rakesh Ranjan
 
+Application URL:
+---------------
+- URL: http://uniblocks.me/
+
 Usage:
 -----
 This project provides a portal for students (currently for Bay Area only) to search apartments and/or find new room mates to live with near their educational institutes.
