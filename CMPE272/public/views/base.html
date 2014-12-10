@@ -3,7 +3,7 @@
 	<ui-gmap-google-map 
 		center='map.center'
 		zoom='map.zoom'
-		options="{disableDefaultUI: true}"
+		options="{disableDefaultUI: true}" control="map.control"
 		style="position: fixed;left: 0; right: 0; top: 0; bottom: 0"
 		data-scale-height>
 	<div ng-repeat="mark in markers track by $index" position="{{mark.id}}" style="'white-space:nowrap'">

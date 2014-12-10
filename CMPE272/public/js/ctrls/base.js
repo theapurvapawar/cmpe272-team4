@@ -1,5 +1,5 @@
 cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
-	$rootScope.map = { center: { latitude: 37.6, longitude: -122.2 }, zoom: 10,  mapTypeId: google.maps.MapTypeId.ROADMAP };
+	$rootScope.map = { center: { latitude: 37.6, longitude: -122.2 }, zoom: 10,  mapTypeId: google.maps.MapTypeId.ROADMAP, control :{} };
 	
 	$rootScope.markers = [];
 	$rootScope.univmarkers=[];
