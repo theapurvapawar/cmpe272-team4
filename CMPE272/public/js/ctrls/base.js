@@ -16,23 +16,8 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 			var pad = $rootScope.markers.length+1;
 			
 			$rootScope.pageToken = data.next_page_token;
-			//console.log(data.results);	
-			//var long_trans=(parseFloat(long)+0.6).toString();
-			//var lat_trans=(parseFloat(lat)+0.6).toString();
 			
 			angular.forEach(data.results, function(v, i){
-				/*
-				//Transit data
-				var transit_url='/api/stops/geoRange?long1='+long+'&long2='+v.geometry.location.lng+'&lat1='+lat+'&lat2='+v.geometry.location.lat
-				console.log(transit_url);
-				//var transit_url='http://localhost:3000/api/stops/geoRange?long1=-122.569&long2=-122.006&lat1=33.023&lat2=37.552'
-				$http.post('/api/forwardRequest', { url : transit_url}).success(function(data){
-					$scope.transit = data;
-					var transimage='http://inclusivemobility.net/assets/leaflet-maps-marker-icons/busstop.png'
-					console.log("transiturl:"+transit_url);
-					//console.log("data:"+data.LONG_);
-					
-				});*/
 				
 				
 				var dist=distance(lat,long,v.geometry.location.lat,v.geometry.location.lng);
@@ -101,7 +86,6 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 	};
 	
 	$rootScope.markers.onClick = function() {
-        console.log("Clicked!");
         $rootScope.markers.show = !$rootScope.markers.show;
         $rootScope.$apply();
     };
@@ -110,7 +94,12 @@ cmpe.controller('baseCtrl', function($scope, $rootScope, $http){
 		$rootScope.map.center.latitude = lat-0.005;
 		$rootScope.map.center.longitude = lng;
 		$rootScope.map.zoom = zoom;
-		console.log("zoom");
+	};
+	
+	$rootScope.resetMarkers = function(){
+		$rootScope.markers = [];
+		$rootScope.univmarkers=[];
+		$rootScope.transitmarker=[];
 	};
 	
 });
