@@ -46,10 +46,17 @@
 							<a title="Delete listing" style="color: #000;" data-ng-if="user._id == listing.userId" data-ng-click="deleteListing(listing)" class="pointer">&#10006;</a>
 						</div>
 						<h4 style="margin: 0;">{{listing.desc}}</h4>
-						<div><b>Bedrooms:</b> {{listing.noOfBedrooms}} | <b>Bathrooms:</b> {{listing.noOfBathrooms}} | <b>Rent:</b> {{listing.rent}}</div>
-						<div><b>Amenities:</b> {{listing.amenities}}</div>
-						<div data-ng-if="user"><b>Contact:</b> {{listing.contact}}</div>
-						<div data-ng-if="!user">Please login to see contact details for this listing</div>
+						<div class="col-xs-6">
+							<div><b>Amenities:</b> {{listing.amenities}}</div>
+							<div data-ng-if="user"><b>Contact:</b> {{listing.contact}}</div>
+							<div data-ng-if="!user">Please login to see contact details for this listing</div>
+						</div>
+						<div class="col-xs-6">
+							<div><b>Bedrooms:</b> <span>{{listing.noOfBedrooms}}</span></div> 
+							<div><b>Bathrooms:</b> <span>{{listing.noOfBathrooms}}</span></div>
+							<div><b>Rent:</b> <span>{{listing.rent}}</span></div>
+						</div>
+						<hr>
 					</div>
 				</div>
 				

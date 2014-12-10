@@ -3,6 +3,8 @@ cmpe.controller('searchCtrl', function($scope, $stateParams, $rootScope, $http){
 	$scope.label = $stateParams.universityName;
 
 	$scope.uniLat = $stateParams.lat; $scope.uniLong = $stateParams.lng;
+	
+	$rootScope.transitmarker = [];
 
 	$scope.loadMore = function(){
 		var url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=apartments+near'

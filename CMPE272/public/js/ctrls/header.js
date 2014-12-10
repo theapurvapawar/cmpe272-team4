@@ -8,6 +8,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope
 
 		modalInstance.result.then(function (user) {
 			$rootScope.user = user;
+			$scope.user = user;
 		}, function () {
 
 		});
@@ -22,6 +23,7 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope
 
 		modalInstance.result.then(function (user) {
 			$rootScope.user = user;
+			$scope.user = user;
 		}, function () {
 
 		});
@@ -42,11 +44,18 @@ cmpe.controller('headerCtrl', function($scope, $http, $modal, $state, $rootScope
 		$state.transitionTo('root.base.search', {lat: item.geometry.location.lat, lng : item.geometry.location.lng, universityName : label});
 	};
 	
-	$http.get('/authApi/getUser').success(function(data){
-		if(data._id){
-			$rootScope.user = data;
-		}
-	});
+	
+	
+	$scope.syncUser = function(){
+		$http.get('/authApi/getUser').success(function(data){
+			if(data._id){
+				$rootScope.user = data;
+				$scope.user = data;
+			}
+		});
+	};
+	
+	$scope.syncUser();
 	
 	$scope.logout = function(){
 		$http.get('/authApi/logout').success(function(data){
@@ -66,7 +75,7 @@ cmpe.controller('authCtrl', function($scope, $http, $modalInstance, $window){
 	$scope.logging = false;
 	$scope.doLogin = function(){
 		$http.post('/authApi/auth/local', {email: $scope.user.username, password : $scope.user.password}).success(function(data){
-			$modalInstance.close(data);
+			$modalInstance.close(data.user);
 		});
 	};
 
