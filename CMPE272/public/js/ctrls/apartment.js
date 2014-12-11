@@ -112,6 +112,7 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$r
 
 	$scope.calcRoute = function (routePoints) {
 		setTimeout(function(){
+			//markermode=null;
 			directionsDisplay.setMap(null);
 			//directionsDisplay = new google.maps.DirectionsRenderer();
 			//directionsDisplay.setMap($scope.map.control.getGMap());
@@ -124,17 +125,20 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$r
 		    var directionsService = new google.maps.DirectionsService();
 		    var origin = new google.maps.LatLng(routePoints.start.lat, routePoints.start.lng);
 		    var dest = new google.maps.LatLng(routePoints.dest.lat, routePoints.dest.lng);
+		    var markermode=google.maps.TravelMode.WALKING;
 		    var request = {
 		      origin: origin,
 		      destination: dest,
-		      travelMode: google.maps.TravelMode.WALKING
+		      travelMode: markermode
 		    };
 		    directionsService.route(request, function(response, status) {
 		      if (status == google.maps.DirectionsStatus.OK) {
 		        directionsDisplay.setDirections(response);
+		        markermode="";
 		      }
 		    });
 		    console.log('added d');
+		    markermode=null;
 		    $scope.$apply();
 		    return;
 		},1000);
