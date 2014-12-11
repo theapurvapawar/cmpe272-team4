@@ -161,7 +161,10 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 	};
 
 	$scope.makeSticky = function(){
-		$scope.stickySelected = $scope.stickyDays;
+		if($scope.stickyDays.number)
+			$scope.stickySelected = $scope.stickyDays;
+		else
+			alert('Please select the number of days to make sticky.');
 		console.log($scope.stickyDays);
 	};
 
@@ -180,6 +183,10 @@ cmpe.controller('postListingCtrl', function($scope, $http, $modalInstance, apart
 		}).success(function(data){
 			$modalInstance.close();
 		});
+	};
+	
+	$scope.cancel = function(){
+		$modalInstance.dismiss('cancel');
 	};
 
 });
