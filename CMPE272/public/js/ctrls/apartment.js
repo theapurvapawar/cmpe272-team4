@@ -21,7 +21,7 @@ cmpe.controller('apartmentCtrl', function($scope, $stateParams, $http, $modal,$r
 				}
 		};
 		
-		//$scope.calcRoute(routePoints);
+		$scope.calcRoute(routePoints);
 
 		$scope.panTo(data.result.geometry.location.lat, data.result.geometry.location.lng, 15);
 
