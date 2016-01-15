@@ -7,7 +7,7 @@ CMPE 272 Team 4 Project
 
 Application URL:
 ---------------
-- URL: http://uniblocks.me/
+- URL: http://54.183.68.182/
 
 Usage:
 -----
